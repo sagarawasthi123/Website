@@ -312,5 +312,713 @@
       "inactive": "निष्क्रिय",
       "pending": "प्रलंबित"
     }
-  }
+  },
+  "yieldPage": {
+    "header": {
+      "title": "उत्पादन व पिक विश्लेषण",
+      "subtitle": "समग्र पिक कार्यक्षमता विश्लेषण",
+      "export": "अहवाल निर्यात करा"
+    },
+    "filters": {
+      "title": "विश्लेषण फिल्टर",
+      "year": "वर्ष निवडा",
+      "crop": "पिक निवडा",
+      "district": "जिल्हा निवडा",
+      "reset": "फिल्टर रीसेट करा"
+    },
+    "metrics": {
+      "totalProduction": "एकूण उत्पादन",
+      "averageYield": "सरासरी उत्पादन",
+      "cultivatedArea": "खताची/शेती क्षेत्र",
+      "efficiencyRate": "कार्यक्षमता दर",
+      "fromLastYear": "मागील वर्षापासून"
+    },
+    "tabs": {
+      "trends": "उत्पादन ट्रेंड",
+      "seasonal": "हंगामी विश्लेषण",
+      "comparison": "पिक तुलना",
+      "districts": "जिल्हानिहाय कामगिरी"
+    },
+    "charts": {
+      "yieldTrends": {
+        "title": "5-वर्ष उत्पादन ट्रेंड",
+        "description": "पिक प्रकारानुसार ऐतिहासिक कामगिरी"
+      },
+      "seasonal": {
+        "title": "हंगामी उत्पादन विश्लेषण",
+        "description": "हंगामांमध्ये उत्पादन विरुद्ध उद्दिष्ट"
+      },
+      "comparison": {
+        "area": "पिक क्षेत्र वितरण",
+        "yield": "पिकानुसार उत्पादन कार्यक्षमता"
+      },
+      "district": {
+        "title": "जिल्हानिहाय कामगिरी",
+        "description": "प्रमुख जिल्ह्यांमधील उत्पादन तुलना"
+      },
+      "monthly": {
+        "title": "मासिक पिक प्रगती",
+        "description": "वर्षभर पेरणी, वाढ व कापणी प्रगती"
+      }
+    },
+    "crops": {
+      "all": "सर्व पिके",
+      "rice": "तांदूळ",
+      "wheat": "गहू",
+      "sugarcane": "ऊस",
+      "vegetables": "भाजीपाला",
+      "pulses": "डाळी"
+    },
+    "districts": {
+      "all": "सर्व जिल्हे",
+      "cuttack": "कटक",
+      "bhubaneswar": "भुवनेश्वर",
+      "puri": "पुरी",
+      "khordha": "खोर्धा",
+      "ganjam": "गंजाम"
+    },
+    "months": {
+      "jan": "जाने",
+      "feb": "फेब्रु",
+      "mar": "मार्च",
+      "apr": "एप्रि",
+      "may": "मे",
+      "jun": "जून"
+    }
+  },
+  "pestTracking": {
+    "header": {
+      "title": "कीटक व रोग ट्रॅकिंग",
+      "subtitle": "पिक आरोग्य धोक्यांचे निरीक्षण व व्यवस्थापन",
+      "activeOutbreaks": "{{count}} सक्रिय उद्रेक"
+    },
+    "alerts": {
+      "critical": "गंभीर अलर्ट",
+      "description": "कटक जिल्ह्यात ब्राउन प्लांट हॉप्परचा उद्रेक आढळला; 2,500 हेक्टर प्रभावित. त्वरित कारवाई आवश्यक."
+    },
+    "metrics": {
+      "activeOutbreaks": "सक्रिय उद्रेक",
+      "affectedArea": "प्रभावित क्षेत्र",
+      "farmersImpacted": "प्रभावित शेतकरी",
+      "controlRate": "नियंत्रण दर",
+      "change": {
+        "activeOutbreaks": "या आठवड्यात +2",
+        "affectedArea": "मागील महिन्यापासून +15%",
+        "farmersImpacted": "या आठवड्यात +8%",
+        "controlRate": "+12% सुधारणा"
+      }
+    },
+    "filters": {
+      "title": "उद्रेक फिल्टर करा",
+      "district": "जिल्हा निवडा",
+      "severity": "तीव्रता निवडा",
+      "allDistricts": "सर्व जिल्हे",
+      "allSeverity": "सर्व तीव्रता",
+      "reset": "फिल्टर रीसेट करा"
+    },
+    "tabs": {
+      "heatmap": "कीटक हीटमॅप",
+      "outbreaks": "सक्रिय उद्रेक",
+      "diseases": "रोग अलर्ट",
+      "treatment": "उपचार मार्गदर्शक"
+    },
+    "outbreaks": {
+      "crop": "पिक",
+      "district": "जिल्हा",
+      "area": "प्रभावित क्षेत्र",
+      "farmers": "शेतकरी",
+      "view": "तपशील",
+      "alert": "अलर्ट पाठवा"
+    },
+    "disease": {
+      "risk": "{{severity}} धोका",
+      "affecting": "{{crop}} पिकांना प्रभावित करत आहे",
+      "symptoms": "लक्षणे",
+      "prevention": "प्रतिबंध",
+      "treatment": "उपचार"
+    },
+    "heatmap": {
+      "title": "पिक आरोग्य हीटमॅप"
+    },
+    "treatment": {
+      "header": "{{pest}} उपचार",
+      "chemical": "शिफारस केलेले रसायन",
+      "dosage": "मात्रा",
+      "application": "लागवडीची पद्धत",
+      "frequency": "वारंवारता"
+    },
+    "severity": {
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "कमी"
+    },
+    "status": {
+      "active": "सक्रिय",
+      "controlled": "नियंत्रित",
+      "monitoring": "निगराणी",
+      "treatment": "उपचार"
+    },
+    "data": {
+      "pests": {
+        "brownPlantHopper": "ब्राउन प्लांट हॉप्पर",
+        "stemBorer": "तणछिद्रक",
+        "aphids": "अळी",
+        "leafCurlVirus": "पान वाकडा व्हायरस"
+      },
+      "crops": {
+        "rice": "तांदूळ",
+        "wheat": "गहू",
+        "tomato": "टोमॅटो"
+      },
+      "districts": {
+        "cuttack": "कटक",
+        "puri": "पुरी",
+        "bhubaneswar": "भुवनेश्वर",
+        "khordha": "खोर्धा",
+        "balasore": "बालासोर",
+        "bhadrak": "भद्रक",
+        "nayagarh": "नयागढ"
+      },
+      "diseases": {
+        "blastDisease": "ब्लास्ट रोग",
+        "powderyMildew": "पावडरी मिल्ड्यू",
+        "bacterialWilt": "बॅक्टेरियल विल्ट"
+      },
+      "symptoms": {
+        "blastDisease": "पानांवर तपकिरी ठिपके, मानेचा कुजणे",
+        "powderyMildew": "पानांवर पांढरा पावडरी वाढ",
+        "bacterialWilt": "पान वाळणे, पिवळेपणा"
+      },
+      "prevention": {
+        "blastDisease": "प्रतिरोधक वाण वापरा, योग्य निचरा",
+        "powderyMildew": "अतिरिक्त घनता टाळा, योग्य वातानुकूलन",
+        "bacterialWilt": "पीक फेरपालट, माती निर्जंतुकीकरण"
+      },
+      "treatment": {
+        "blastDisease": "फंगीसायड फवारणी (ट्राइसायक्लाझोल)",
+        "powderyMildew": "सल्फर-आधारित फंगीसायड",
+        "bacterialWilt": "तांबे-आधारित बॅक्टेरिसाइड"
+      },
+      "weatherAdvisories": {
+        "heavyRainfall": {
+          "title": "जोरदार पावसाचा इशारा",
+          "description": "किनारी जिल्ह्यांमध्ये जोरदार पावसाची शक्यता; बुरशीजन्य रोगांचा धोका वाढू शकतो"
+        },
+        "temperatureRise": {
+          "title": "तापमान वाढ इशारा",
+          "description": "तापमान वाढ किडींच्या वाढीस अनुकूल"
+        }
+      },
+      "treatments": {
+        "brownPlantHopper": {
+          "chemical": "इमिडाक्लोप्रिड 17.8% SL",
+          "dosage": "0.3 मि.ली/लिटर पाणी",
+          "application": "संध्याकाळी पानांवर फवारणी",
+          "frequency": "10 दिवसांच्या अंतराने 2-3 वेळा"
+        },
+        "stemBorer": {
+          "chemical": "क्लोरॅन्ट्रानिलिप्रोल 18.5% SC",
+          "dosage": "0.4 मि.ली/लिटर पाणी",
+          "application": "गाभा व खोडावर फवारणी",
+          "frequency": "प्रारंभिक अवस्थेत लागू करा"
+        }
+      }
+    }
+  },
+  "marketPage": {
+    "header": {
+      "title": "बाजार भाव",
+      "subtitle": "रिअल-टाईम पिक भाव निरीक्षण व विश्लेषण",
+      "refresh": "भाव रिफ्रेश करा"
+    },
+    "crops": {
+      "riceCommon": "तांदूळ (सामान्य)",
+      "riceBasmati": "तांदूळ (बासमती)",
+      "wheat": "गहू",
+      "sugarcane": "ऊस",
+      "onion": "कांदा",
+      "potato": "बटाटा"
+    },
+    "units": {
+      "perQuintal": "प्रति क्विंटल"
+    },
+    "districts": {
+      "bhubaneswar": "भुवनेश्वर",
+      "cuttack": "कटक",
+      "puri": "पुरी",
+      "khordha": "खोर्धा",
+      "balasore": "बालासोर",
+      "ganjam": "गंजाम"
+    },
+    "updated": {
+      "1h": "1 तासापूर्वी",
+      "2h": "2 तासांपूर्वी",
+      "3h": "3 तासांपूर्वी",
+      "4h": "4 तासांपूर्वी"
+    },
+    "alerts": {
+      "onion": "शेवटच्या 24 तासांत कांद्याचा भाव 8.5% ने वाढला",
+      "riceCommon": "तांदळाचा भाव ₹2,850/क्विंटल मासिक उच्चांक गाठला",
+      "potato": "बटाट्याचा भाव समर्थन पातळीखाली"
+    },
+    "charts": {
+      "rice": "तांदूळ (₹/क्विंटल)",
+      "wheat": "गहू (₹/क्विंटल)",
+      "onion": "कांदा (₹/क्विंटल)",
+      "potato": "बटाटा (₹/क्विंटल)"
+    },
+    "metrics": {
+      "averagePriceIndex": "सरासरी भाव निर्देशांक",
+      "priceVolatility": "भाव अस्थिरता",
+      "activeMarkets": "सक्रिय बाजार",
+      "dailyUpdates": "दैनिक अपडेट",
+      "newMarkets": "+{{count}} नवीन",
+      "todayUpdates": "+{{count}} आज"
+    },
+    "tabs": {
+      "current": "वर्तमान भाव",
+      "trends": "भाव ट्रेंड",
+      "comparison": "बाजार तुलना"
+    },
+    "filters": {
+      "title": "भाव फिल्टर करा",
+      "selectMarket": "बाजार निवडा",
+      "selectCrop": "पिक निवडा",
+      "allMarkets": "सर्व बाजार",
+      "allCrops": "सर्व पिके",
+      "rice": "तांदूळ",
+      "wheat": "गहू",
+      "vegetables": "भाजीपाला",
+      "reset": "फिल्टर रीसेट करा"
+    },
+    "alerts2": {
+      "title": "भाव अलर्ट",
+      "description": "अलीकडील महत्त्वपूर्ण भाव बदल"
+    },
+    "trends": {
+      "title": "भाव ट्रेंड (शेवटचे 20 दिवस)",
+      "description": "प्रमुख पिकांच्या ऐतिहासिक भाव बदलांचा आढावा"
+    },
+    "comparison": {
+      "title": "बाजारनिहाय भाव तुलना",
+      "description": "विविध बाजारांतील भावांची तुलना करा"
+    },
+    "previous": "मागील"
+  },
+  "alertsPage": {
+    "header": {
+      "title": "अलर्ट व सूचना",
+      "subtitle": "शेतकऱ्यांना सूचना व्यवस्थापित करा व पाठवा",
+      "composeAlert": "नवीन अलर्ट तयार करा"
+    },
+    "compose": {
+      "title": "नवीन अलर्ट तयार करा",
+      "description": "निवडलेल्या भागातील शेतकऱ्यांना सूचना तयार करा व पाठवा",
+      "alertType": "अलर्ट प्रकार",
+      "selectAlertType": "अलर्ट प्रकार निवडा",
+      "priority": "प्राथमिकता",
+      "alertTitle": "अलर्ट शीर्षक",
+      "enterAlertTitle": "अलर्ट शीर्षक प्रविष्ट करा",
+      "message": "संदेश",
+      "enterAlertMessage": "अलर्ट संदेश प्रविष्ट करा",
+      "targetDistricts": "लक्ष्य जिल्हे",
+      "districtsSelected": "जिल्हे निवडले",
+      "cancel": "रद्द",
+      "sendAlert": "अलर्ट पाठवा"
+    },
+    "metrics": {
+      "totalAlerts": "एकूण पाठवलेले अलर्ट",
+      "thisWeek": "या आठवड्यात +{{count}}",
+      "activeRecipients": "सक्रिय प्राप्तकर्ते",
+      "newRecipients": "+{{count}} नवीन",
+      "deliveryRate": "वितरण दर",
+      "improvement": "+{{percent}}% सुधारणा",
+      "responseRate": "प्रतिसाद दर",
+      "increase": "+{{percent}}% वाढ"
+    },
+    "tabs": {
+      "sent": "पाठवलेले",
+      "templates": "टेम्पलेट्स",
+      "analytics": "विश्लेषण"
+    },
+    "filters": {
+      "title": "अलर्ट फिल्टर करा",
+      "filterByType": "प्रकारानुसार फिल्टर करा",
+      "filterByStatus": "स्थितीनुसार फिल्टर करा",
+      "allTypes": "सर्व प्रकार",
+      "allStatus": "सर्व स्थिती",
+      "reset": "फिल्टर रीसेट करा"
+    },
+    "priority": {
+      "critical": "गंभीर",
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "कमी"
+    },
+    "status": {
+      "delivered": "वितरित",
+      "pending": "प्रलंबित",
+      "failed": "अयशस्वी"
+    },
+    "sentAlerts": {
+      "weather": {
+        "title": "जोरदार पावसाचा इशारा",
+        "message": "किनारी जिल्ह्यांमध्ये जोरदार ते अतिजोरदार पावसाची शक्यता आहे. उभ्या पिकांसाठी आवश्यक काळजी घ्या."
+      },
+      "pest": {
+        "title": "ब्राउन प्लांट हॉप्पर अलर्ट",
+        "message": "तांदूळ शेतात ब्राउन प्लांट हॉप्परचा उद्रेक आढळला आहे. शिफारस केलेली कीटकनाशके त्वरित फवारणी करा."
+      },
+      "scheme": {
+        "title": "पीएम-किसान नोंदणी स्मरणपत्र",
+        "message": "पीएम-किसान योजनेची नोंदणीची अंतिम तारीख जवळ आली आहे. कृपया अंतिम तारखेपूर्वी अर्ज पूर्ण करा."
+      },
+      "market": {
+        "title": "तांदूळ भाव अपडेट",
+        "message": "प्रमुख बाजारांमध्ये तांदळाचा भाव 8% ने वाढला आहे. वर्तमान दर: भुवनेश्वर बाजारात ₹2,850/क्विंटल."
+      }
+    },
+    "templates": {
+      "weather": {
+        "name": "हवामान अलर्ट टेम्पलेट",
+        "subject": "हवामान अलर्ट: {weather_type} ची शक्यता",
+        "message": "प्रिय शेतकरी,\n\nआपल्या भागात {start_date} ते {end_date} दरम्यान {weather_type} ची शक्यता आहे. कृपया आवश्यक खबरदारी घ्या:\n\n• {precaution_1}\n• {precaution_2}\n• {precaution_3}\n\nअधिक माहितीसाठी आपल्या स्थानिक कृषी अधिकाऱ्यांशी संपर्क साधा.\n\nधन्यवाद,\nइलेक्ट्रॉनिक्स व आयटी विभाग, ओडिशा"
+      },
+      "pest": {
+        "name": "कीटक अलर्ट टेम्पलेट",
+        "subject": "तातडीचे: {pest_name} अलर्ट",
+        "message": "प्रिय शेतकरी,\n\nआपल्या भागातील {crop_name} शेतात {pest_name} आढळले आहे. तात्काळ कृती आवश्यक:\n\n• {chemical_name} ची {dosage} वर फवारणी करा\n• {application_time} दरम्यान वापरा\n• आवश्यक असल्यास {repeat_interval} नंतर पुन्हा करा\n\nमदतीसाठी हेल्पलाईन: 1800-XXX-XXXX.\n\nधन्यवाद,\nइलेक्ट्रॉनिक्स व आयटी विभाग, ओडिशा"
+      },
+      "subject": "विषय",
+      "messageTemplate": "संदेश टेम्पलेट",
+      "edit": "टेम्पलेट संपादित करा",
+      "use": "टेम्पलेट वापरा"
+    },
+    "analytics": {
+      "distributionByType": "प्रकारानुसार अलर्ट वितरण",
+      "deliveryPerformance": "वितरण कार्यक्षमता",
+      "smsDelivery": "SMS वितरण",
+      "appNotifications": "अॅप सूचना",
+      "voiceCalls": "व्हॉईस कॉल्स",
+      "emailDelivery": "ईमेल वितरण"
+    },
+    "recipients": "प्राप्तकर्ते",
+    "delivered": "वितरित",
+    "districts": {
+      "puri": "पुरी",
+      "balasore": "बालासोर",
+      "bhadrak": "भद्रक",
+      "cuttack": "कटक",
+      "khordha": "खोर्धा",
+      "bhubaneswar": "भुवनेश्वर",
+      "allDistricts": "सर्व जिल्हे"
+    },
+    "notifications": {
+      "weather": "हवामान अलर्ट",
+      "pest": "कीटक अलर्ट",
+      "market": "बाजार अपडेट",
+      "scheme": "योजना सूचना",
+      "advisory": "सूचना/सल्ला"
+    }
+  },
+  "schemes": {
+    "dialog": {
+      "addTitle": "नवीन योजना जोडा",
+      "addDescription": "शासकीय योजना आणि अनुदान"
+    },
+    "form": {
+      "beneficiaries": "लाभार्थी",
+      "targetBeneficiaries": "लक्षित लाभार्थी",
+      "totalBudget": "एकूण अंदाजपत्रक",
+      "name": "नाव",
+      "description": "वर्णन",
+      "category": "वर्ग",
+      "status": "स्थिती"
+    },
+    "header": {
+      "title": "योजना व सब्सिडी",
+      "subtitle": "सरकारी योजना व सब्सिडी व्यवस्थापन"
+    },
+    "metrics": {
+      "totalSchemes": "एकूण योजना",
+      "totalBeneficiaries": "एकूण लाभार्थी",
+      "budgetUtilized": "वापरलेला अर्थसंकल्प",
+      "avgEnrollment": "सरासरी नोंदणी दर",
+      "changes": {
+        "totalSchemes": "या वर्षी +1 नवीन",
+        "totalBeneficiaries": "या महिन्यात +2,340",
+        "budgetUtilized": "एकूण अर्थसंकल्पाचा {{percentage}}%",
+        "avgEnrollment": "+5.3% सुधारणा"
+      },
+      "values": {
+        "budgetUtilized": "₹{{amount}} कोटी",
+        "budget": "₹{{amount}} कोटी"
+      }
+    },
+    "filters": {
+      "title": "योजना फिल्टर करा",
+      "selectCategory": "वर्ग निवडा",
+      "selectStatus": "स्थिती निवडा",
+      "allCategories": "सर्व वर्ग",
+      "allStatus": "सर्व स्थिती"
+    },
+    "tabs": {
+      "activeSchemes": "सक्रिय योजना",
+      "analytics": "विश्लेषण",
+      "performance": "कामगिरी"
+    },
+    "buttons": {
+      "export": "अहवाल निर्यात करा",
+      "addScheme": "योजना जोडा",
+      "reset": "फिल्टर रीसेट करा",
+      "viewDetails": "तपशील पहा"
+    },
+    "labels": {
+      "budgetUtilization": "अर्थसंकल्प वापर",
+      "beneficiaries": "लाभार्थी",
+      "launchDate": "लॉंच दिनांक",
+      "totalBudget": "एकूण अर्थसंकल्प",
+      "eligibility": "पात्रता",
+      "benefits": "लाभ"
+    },
+    "status": {
+      "active": "सक्रिय",
+      "new": "नवीन",
+      "completed": "पूर्ण"
+    },
+    "charts": {
+      "schemeDistribution": "वर्गानुसार योजना वितरण",
+      "monthlyEnrollment": "मासिक नोंदणी ट्रेंड",
+      "enrolled": "नोंदणीकृत",
+      "target": "लक्ष्य"
+    },
+    "performance": {
+      "title": "जिल्हानिहाय कामगिरी",
+      "description": "जिल्हानिहाय लाभार्थी व वापर दर",
+      "beneficiaries": "{{count}} लाभार्थी",
+      "utilization": "{{percentage}}% वापर"
+    },
+    "data": {
+      "categories": {
+        "incomeSupport": "उत्पन्न सहाय्य",
+        "insurance": "विमा",
+        "credit": "कर्ज",
+        "soilHealth": "माती आरोग्य",
+        "sustainableAgriculture": "शाश्वत शेती"
+      },
+      "schemes": {
+        "pmKisan": {
+          "name": "पीएम-किसान",
+          "description": "शेतकऱ्यांसाठी थेट उत्पन्न सहाय्य",
+          "eligibility": "शेतीयोग्य जमीन असलेले छोटेमोठे शेतकरी",
+          "benefits": "वर्षाला ₹6,000 (3 हप्त्यांत)"
+        },
+        "pmfby": {
+          "name": "प्रधानमंत्री फसल बीमा योजना",
+          "description": "शेतकऱ्यांसाठी पिक विमा",
+          "eligibility": "अधिसूचित पिके घेणारे सर्व शेतकरी",
+          "benefits": "पिकांसाठी व्यापक जोखीम कव्हर"
+        },
+        "soilHealth": {
+          "name": "माती आरोग्य कार्ड योजना",
+          "description": "माती चाचणी व आरोग्य निरीक्षण",
+          "eligibility": "शेती जमीन असलेले सर्व",
+          "benefits": "मोफत माती चाचणी व पोषक शिफारसी"
+        },
+        "kisanCredit": {
+          "name": "किसान क्रेडिट कार्ड",
+          "description": "शेती कामांसाठी कर्ज सहाय्य",
+          "eligibility": "वैध जमिनीची नोंद असलेले शेतकरी",
+          "benefits": "शेती गरजांसाठी सुलभ कर्ज"
+        },
+        "organicFarming": {
+          "name": "सेंद्रिय शेती प्रोत्साहन",
+          "description": "सेंद्रिय शेती पद्धतींना समर्थन",
+          "eligibility": "सेंद्रिय पद्धती स्वीकृत करण्यास इच्छुक",
+          "benefits": "सेंद्रिय इनपुट व प्रमाणनावर अनुदान"
+        }
+      },
+      "months": {
+        "jan": "जाने",
+        "feb": "फेब्रु",
+        "mar": "मार्च",
+        "apr": "एप्रि",
+        "may": "मे",
+        "jun": "जून",
+        "jul": "जुलै",
+        "aug": "ऑग",
+        "sep": "सप्",
+        "oct": "ऑक्टो",
+        "nov": "नोव्हें",
+        "dec": "डिसें"
+      },
+      "districts": {
+        "cuttack": "कटक",
+        "bhubaneswar": "भुवनेश्वर",
+        "puri": "पुरी",
+        "khordha": "खोर्धा",
+        "ganjam": "गंजाम"
+      }
+    }
+  },
+  "common": {
+    "cancel": "रद्द"
+  },
+  "reports": {
+    "pageTitle": "अहवाल व अंतर्दृष्टी",
+    "pageDescription": "विश्लेषणात्मक अहवाल तयार करा व व्यवस्थापित करा",
+    "generateReport": "अहवाल तयार करा",
+    "generateNewReport": "नवीन अहवाल तयार करा",
+    "generateReportDescription": "विशिष्ट पॅरामीटर्ससह सानुकूल अहवाल",
+    "reportTitle": "अहवाल शीर्षक",
+    "enterReportTitle": "अहवाल शीर्षक प्रविष्ट करा",
+    "reportType": "अहवाल प्रकार",
+    "selectReportType": "अहवाल प्रकार निवडा",
+    "dateRange": "दिनांक श्रेणी",
+    "selectDate": "दिनांक निवडा",
+    "fromDate": "पासून दिनांक",
+    "toDate": "पर्यंत दिनांक",
+    "generating": "तयार होत आहे...",
+    "filterReports": "अहवाल फिल्टर करा",
+    "filterByType": "प्रकारानुसार फिल्टर करा",
+    "filterByStatus": "स्थितीनुसार फिल्टर करा",
+    "resetFilters": "फिल्टर रीसेट करा",
+    "generated": "निर्मित",
+    "by": "द्वारे",
+    "size": "आकार",
+    "downloads": "डाउनलोड",
+    "format": "स्वरूप",
+    "preview": "पूर्वावलोकन",
+    "download": "डाउनलोड",
+    "viewDetails": "तपशील पहा",
+    "recommendation": "शिफारस",
+    "impact2": "परिणाम",
+    "tabs": {
+      "generatedReports": "निर्मित अहवाल",
+      "keyInsights": "महत्त्वाच्या अंतर्दृष्टी",
+      "reportAnalytics": "अहवाल विश्लेषण"
+    },
+    "filters": {
+      "allTypes": "सर्व प्रकार",
+      "allStatus": "सर्व स्थिती"
+    },
+    "types": {
+      "registration": "नोंदणी",
+      "analytics": "विश्लेषण",
+      "pestControl": "कीटक नियंत्रण",
+      "market": "बाजार",
+      "schemes": "योजना",
+      "registrationReport": "नोंदणी अहवाल",
+      "analyticsReport": "विश्लेषण अहवाल",
+      "pestControlReport": "कीटक नियंत्रण अहवाल",
+      "marketAnalysis": "बाजार विश्लेषण",
+      "schemesReport": "योजना अहवाल"
+    },
+    "status": {
+      "completed": "पूर्ण",
+      "processing": "प्रक्रिया चालू",
+      "failed": "अयशस्वी"
+    },
+    "impact": {
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "कमी"
+    },
+    "categories": {
+      "registration": "नोंदणी",
+      "yield": "उत्पादन",
+      "pestControl": "कीटक नियंत्रण",
+      "market": "बाजार"
+    },
+    "generatedBy": {
+      "systemAdmin": "सिस्टम प्रशासक",
+      "dataAnalyst": "डेटा विश्लेषक",
+      "fieldOfficer": "मैदानी अधिकारी",
+      "marketAnalyst": "बाजार विश्लेषक",
+      "programManager": "कार्यक्रम व्यवस्थापक"
+    },
+    "metrics": {
+      "totalReports": "एकूण अहवाल",
+      "thisMonth": "या महिन्यात +{{count}}",
+      "downloads": "डाउनलोड",
+      "thisWeek": "या आठवड्यात +{{count}}",
+      "activeUsers": "सक्रिय वापरकर्ते",
+      "newUsers": "+{{count}} नवीन वापरकर्ते",
+      "insightsGenerated": "निर्मित अंतर्दृष्टी",
+      "newInsights": "+{{count}} नवीन अंतर्दृष्टी"
+    },
+    "months": {
+      "jan": "जाने",
+      "feb": "फेब्रु",
+      "mar": "मार्च",
+      "apr": "एप्रि",
+      "may": "मे",
+      "jun": "जून",
+      "jul": "जुलै",
+      "aug": "ऑग",
+      "sep": "सप्",
+      "oct": "ऑक्टो",
+      "nov": "नोव्हें",
+      "dec": "डिसें"
+    },
+    "chart": {
+      "title": "अहवाल निर्मिती व डाउनलोड ट्रेंड",
+      "description": "मासिक अहवाल निर्मिती व डाउनलोड आकडेवारी",
+      "reportsGenerated": "निर्मित अहवाल",
+      "downloads": "डाउनलोड"
+    },
+    "list": {
+      "monthlyFarmerRegistration": {
+        "title": "मासिक शेतकरी नोंदणी अहवाल",
+        "description": "सर्व जिल्ह्यांतील नवीन नोंदणींचा समग्र आढावा"
+      },
+      "cropYieldPerformance": {
+        "title": "पिक उत्पादन कार्यक्षमता",
+        "description": "सध्याच्या हंगामाची ऐतिहासिक डेटाशी तुलना"
+      },
+      "pestOutbreakSummary": {
+        "title": "कीटक उद्रेक सारांश",
+        "description": "उद्रेक व नियंत्रण उपायांचा सारांश"
+      },
+      "marketPriceTrends": {
+        "title": "बाजार भाव ट्रेंड विश्लेषण",
+        "description": "पिक भाव चढउतार व बाजार ट्रेंड"
+      },
+      "schemeImplementation": {
+        "title": "योजना अंमलबजावणी प्रगती",
+        "description": "सरकारी योजना अंमलबजावणी व लाभार्थी कव्हरेज"
+      }
+    },
+    "insights": {
+      "farmerRegistrationSurge": {
+        "title": "शेतकरी नोंदणीत वाढ",
+        "description": "मागील महिन्याच्या तुलनेत 25% वाढ",
+        "recommendation": "गती टिकवण्यासाठी प्रचार वाढवा"
+      },
+      "cropYieldImprovement": {
+        "title": "उत्पादनात सुधारणा",
+        "description": "प्रमुख पिकांमध्ये सरासरी उत्पादन 12% वाढले",
+        "recommendation": "कमी कामगिरी असलेल्या जिल्ह्यांशी सर्वोत्तम पद्धती शेअर करा"
+      },
+      "pestControlEffectiveness": {
+        "title": "कीटक नियंत्रण प्रभाव",
+        "description": "नियंत्रण उपायांमुळे नुकसान 18% कमी",
+        "recommendation": "वर्तमान धोरणे चालू ठेवा"
+      },
+      "marketPriceVolatility": {
+        "title": "बाजार भाव अस्थिरता",
+        "description": "नेहमीपेक्षा जास्त चढउतार दिसून आले",
+        "recommendation": "भाव स्थिरीकरण उपाय करा"
+      }
+    }
+  },
+  "month2": {
+    "Jan": "जानेवारी",
+    "Feb": "फेब्रुवारी",
+    "Mar": "मार्च",
+    "Apr": "एप्रिल",
+    "May": "मे",
+    "Jun": "जून"
+  },
+  "common.save": "जतन करा"
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -72,89 +72,37 @@ const districts = [
   "Sundargarh",
 ];
 
-const farmers = [
-  {
-    id: "F001",
-    name: "Rajesh Kumar Patel",
-    district: "Cuttack",
-    village: "Banki",
-    phone: "+91 9876543210",
-    landSize: "2.5 acres",
-    crops: ["Rice", "Wheat"],
-    registrationDate: "2024-01-15",
-    status: "active",
-    kccNumber: "KCC001234567",
-  },
-  {
-    id: "F002",
-    name: "Sunita Devi",
-    district: "Bhubaneswar",
-    village: "Patia",
-    phone: "+91 9876543211",
-    landSize: "1.8 acres",
-    crops: ["Rice", "Vegetables"],
-    registrationDate: "2024-02-20",
-    status: "active",
-    kccNumber: "KCC001234568",
-  },
-  {
-    id: "F003",
-    name: "Manoj Singh",
-    district: "Puri",
-    village: "Konark",
-    phone: "+91 9876543212",
-    landSize: "3.2 acres",
-    crops: ["Coconut", "Rice"],
-    registrationDate: "2024-01-08",
-    status: "pending",
-    kccNumber: "KCC001234569",
-  },
-  {
-    id: "F004",
-    name: "Priya Sharma",
-    district: "Khordha",
-    village: "Jatni",
-    phone: "+91 9876543213",
-    landSize: "1.5 acres",
-    crops: ["Vegetables", "Flowers"],
-    registrationDate: "2024-03-10",
-    status: "active",
-    kccNumber: "KCC001234570",
-  },
-  {
-    id: "F005",
-    name: "Ramesh Chandra Das",
-    district: "Ganjam",
-    village: "Berhampur",
-    phone: "+91 9876543214",
-    landSize: "4.1 acres",
-    crops: ["Rice", "Sugarcane"],
-    registrationDate: "2024-02-05",
-    status: "Active",
-    kccNumber: "KCC001234571",
-  },
-  {
-    id: "F006",
-    name: "Kavita Mohanty",
-    district: "Balasore",
-    village: "Nilgiri",
-    phone: "+91 9876543215",
-    landSize: "2.8 acres",
-    crops: ["Rice", "Pulses"],
-    registrationDate: "2024-01-25",
-    status: "inactive",
-    kccNumber: "KCC001234572",
-  },
-];
+import { FARMERS } from "../data/farmers";
+
+const STATIC_FALLBACK = [];
 
 export default function FarmersPage() {
   const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [farmers, setFarmers] = useState(STATIC_FALLBACK);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  useEffect(() => {
+    const normalized = FARMERS.map((u) => ({
+      id: u.id,
+      name: u.nameKey,
+      district: u.stateKey,
+      village: u.cityKey,
+      phone: u.phone || "",
+      landSize: "-",
+      crops: [],
+      registrationDate: "",
+      status: "active",
+      kccNumber: "-",
+    }));
+    setFarmers(normalized);
+    setLoading(false);
+  }, []);
 
   const filteredFarmers = farmers.filter((farmer) => {
     const matchesSearch =
@@ -325,6 +273,11 @@ export default function FarmersPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
+                    {loading && (
+                      <TableRow>
+                        <TableCell colSpan={8}>{t("common.loading")}</TableCell>
+                      </TableRow>
+                    )}
                     {paginatedFarmers.map((farmer, index) => (
                       <TableRow
                         key={farmer.id}
@@ -336,7 +289,9 @@ export default function FarmersPage() {
                         </TableCell>
                         <TableCell>
                           <div>
-                            <p className="font-medium">{t(`farmers.names.${farmer.id}`)}</p>
+                            <p className="font-medium">
+                              {t(`farmers.names.${farmer.id}`)}
+                            </p>
                             <p className="text-xs text-muted-foreground">
                               {t("farmers.kcc")}: {farmer.kccNumber}
                             </p>
@@ -346,8 +301,8 @@ export default function FarmersPage() {
                           <div className="flex items-center space-x-1">
                             <MapPin className="h-3 w-3 text-muted-foreground" />
                             <span className="text-sm">
-                              {t(`farmers.villages.${farmer.village.toLowerCase()}`)},{" "}
-                              {t(`farmers.districts.${farmer.district.toLowerCase()}`)}
+                              {t(`farmers.cities.${farmer.village}`)},{" "}
+                              {t(`farmers.states.${farmer.district}`)}
                             </span>
                           </div>
                         </TableCell>
@@ -360,15 +315,25 @@ export default function FarmersPage() {
                         <TableCell>{farmer.landSize}</TableCell>
                         <TableCell>
                           <div className="flex flex-wrap gap-1">
-                            {farmer.crops.map((crop) => (
-                              <Badge
-                                key={crop}
-                                variant="outline"
-                                className="text-xs"
-                              >
-                                {farmer.crops.map(crop => t(`farmers.crops.${crop.toLowerCase()}`)).join(", ")}
-                              </Badge>
-                            ))}
+                            {farmer.crops?.length ? (
+                              farmer.crops.map((crop) => (
+                                <Badge
+                                  key={crop}
+                                  variant="outline"
+                                  className="text-xs"
+                                >
+                                  {t(
+                                    `farmers.crops.${
+                                      crop.toLowerCase?.() || crop
+                                    }`
+                                  )}
+                                </Badge>
+                              ))
+                            ) : (
+                              <span className="text-xs text-muted-foreground">
+                                -
+                              </span>
+                            )}
                           </div>
                         </TableCell>
                         <TableCell>
@@ -441,3 +406,4 @@ export default function FarmersPage() {
     </div>
   );
 }
+

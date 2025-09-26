@@ -44,29 +44,8 @@ import {
   Plus,
   Filter,
 } from "lucide-react";
-
-const alertTypes = [
-  {
-    id: "weather",
-    label: "Weather Alert",
-    icon: AlertTriangle,
-    color: "text-yellow-500",
-  },
-  {
-    id: "pest",
-    label: "Pest Alert",
-    icon: AlertTriangle,
-    color: "text-red-500",
-  },
-  { id: "market", label: "Market Update", icon: Info, color: "text-blue-500" },
-  {
-    id: "scheme",
-    label: "Scheme Notification",
-    icon: CheckCircle,
-    color: "text-green-500",
-  },
-  { id: "advisory", label: "Advisory", icon: Info, color: "text-purple-500" },
-];
+import { useTranslation } from "react-i18next";
+import { createAlert } from "../services/auth";
 
 const districts = [
   "Angul",
@@ -103,81 +82,8 @@ const districts = [
   "Sundargarh",
 ];
 
-const sentAlerts = [
-  {
-    id: 1,
-    title: "Heavy Rainfall Warning",
-    message:
-      "Heavy to very heavy rainfall expected in coastal districts. Farmers advised to take precautionary measures for standing crops.",
-    type: "weather",
-    priority: "High",
-    recipients: 15420,
-    districts: ["Puri", "Balasore", "Bhadrak"],
-    sentAt: "2024-12-20 14:30",
-    status: "Delivered",
-    deliveryRate: 98.5,
-  },
-  {
-    id: 2,
-    title: "Brown Plant Hopper Alert",
-    message:
-      "Brown plant hopper infestation detected in rice fields. Immediate spraying of recommended insecticides advised.",
-    type: "pest",
-    priority: "Critical",
-    recipients: 8750,
-    districts: ["Cuttack", "Khordha"],
-    sentAt: "2024-12-19 09:15",
-    status: "Delivered",
-    deliveryRate: 96.2,
-  },
-  {
-    id: 3,
-    title: "PM-KISAN Registration Reminder",
-    message:
-      "Last date for PM-KISAN scheme registration is approaching. Complete your application before the deadline.",
-    type: "scheme",
-    priority: "Medium",
-    recipients: 25600,
-    districts: ["All Districts"],
-    sentAt: "2024-12-18 16:45",
-    status: "Delivered",
-    deliveryRate: 94.8,
-  },
-  {
-    id: 4,
-    title: "Rice Price Update",
-    message:
-      "Rice prices have increased by 8% in major markets. Current rate: ₹2,850 per quintal in Bhubaneswar market.",
-    type: "market",
-    priority: "Low",
-    recipients: 12300,
-    districts: ["Bhubaneswar", "Cuttack", "Puri"],
-    sentAt: "2024-12-17 11:20",
-    status: "Delivered",
-    deliveryRate: 97.1,
-  },
-];
-
-const templates = [
-  {
-    id: 1,
-    name: "Weather Alert Template",
-    type: "weather",
-    subject: "Weather Alert: {weather_type} Expected",
-    message:
-      "Dear Farmer,\n\n{weather_type} is expected in your area from {start_date} to {end_date}. Please take necessary precautions:\n\n• {precaution_1}\n• {precaution_2}\n• {precaution_3}\n\nFor more information, contact your local agriculture officer.\n\nRegards,\nElectronics & IT Department, Odisha",
-  },
-  {
-    id: 2,
-    name: "Pest Alert Template",
-    type: "pest",
-    subject: "Urgent: {pest_name} Alert",
-    message:
-      "Dear Farmer,\n\n{pest_name} has been detected in {crop_name} fields in your area. Immediate action required:\n\n• Spray {chemical_name} at {dosage}\n• Apply during {application_time}\n• Repeat after {repeat_interval} if necessary\n\nContact helpline: 1800-XXX-XXXX for assistance.\n\nRegards,\nElectronics & IT Department, Odisha",
-  },
-];
-
 export default function AlertsPage() {
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedAlertType, setSelectedAlertType] = useState("");
   const [selectedDistricts, setSelectedDistricts] = useState([]);
@@ -185,8 +91,180 @@ export default function AlertsPage() {
   const [alertMessage, setAlertMessage] = useState("");
   const [priority, setPriority] = useState("Medium");
   const [isComposing, setIsComposing] = useState(false);
-  const [filterType, setFilterType] = useState("All Types");
-  const [filterStatus, setFilterStatus] = useState("All Status");
+  const [filterType, setFilterType] = useState(
+    t("alertsPage.filters.allTypes")
+  );
+  const [filterStatus, setFilterStatus] = useState(
+    t("alertsPage.filters.allStatus")
+  );
+  const [editingTemplate, setEditingTemplate] = useState(null);
+  const [templateDraft, setTemplateDraft] = useState({
+    subject: "",
+    message: "",
+  });
+
+  // Dynamic data based on language
+  const alertTypes = [
+    {
+      id: "weather",
+      label: t("alertsPage.notifications.weather"),
+      icon: AlertTriangle,
+      color: "text-yellow-500",
+    },
+    {
+      id: "pest",
+      label: t("alertsPage.notifications.pest"),
+      icon: AlertTriangle,
+      color: "text-red-500",
+    },
+    {
+      id: "market",
+      label: t("alertsPage.notifications.market"),
+      icon: Info,
+      color: "text-blue-500",
+    },
+    {
+      id: "scheme",
+      label: t("alertsPage.notifications.scheme"),
+      icon: CheckCircle,
+      color: "text-green-500",
+    },
+    {
+      id: "advisory",
+      label: t("alertsPage.notifications.advisory"),
+      icon: Info,
+      color: "text-purple-500",
+    },
+  ];
+
+  const sentAlerts = [
+    {
+      id: 1,
+      title: t("alertsPage.sentAlerts.weather.title"),
+      message: t("alertsPage.sentAlerts.weather.message"),
+      type: "weather",
+      priority: t("alertsPage.priority.high"),
+      recipients: 15420,
+      districts: [
+        t("alertsPage.districts.puri"),
+        t("alertsPage.districts.balasore"),
+        t("alertsPage.districts.bhadrak"),
+      ],
+      sentAt: "2024-12-20 14:30",
+      status: t("alertsPage.status.delivered"),
+      deliveryRate: 98.5,
+    },
+    {
+      id: 2,
+      title: t("alertsPage.sentAlerts.pest.title"),
+      message: t("alertsPage.sentAlerts.pest.message"),
+      type: "pest",
+      priority: t("alertsPage.priority.critical"),
+      recipients: 8750,
+      districts: [
+        t("alertsPage.districts.cuttack"),
+        t("alertsPage.districts.khordha"),
+      ],
+      sentAt: "2024-12-19 09:15",
+      status: t("alertsPage.status.delivered"),
+      deliveryRate: 96.2,
+    },
+    {
+      id: 3,
+      title: t("alertsPage.sentAlerts.scheme.title"),
+      message: t("alertsPage.sentAlerts.scheme.message"),
+      type: "scheme",
+      priority: t("alertsPage.priority.medium"),
+      recipients: 25600,
+      districts: [t("alertsPage.districts.allDistricts")],
+      sentAt: "2024-12-18 16:45",
+      status: t("alertsPage.status.delivered"),
+      deliveryRate: 94.8,
+    },
+    {
+      id: 4,
+      title: t("alertsPage.sentAlerts.market.title"),
+      message: t("alertsPage.sentAlerts.market.message"),
+      type: "market",
+      priority: t("alertsPage.priority.low"),
+      recipients: 12300,
+      districts: [
+        t("alertsPage.districts.bhubaneswar"),
+        t("alertsPage.districts.cuttack"),
+        t("alertsPage.districts.puri"),
+      ],
+      sentAt: "2024-12-17 11:20",
+      status: t("alertsPage.status.delivered"),
+      deliveryRate: 97.1,
+    },
+  ];
+
+  const templates = [
+    {
+      id: 1,
+      name: t("alertsPage.templates.weather.name"),
+      type: "weather",
+      subject: t("alertsPage.templates.weather.subject"),
+      message: t("alertsPage.templates.weather.message"),
+    },
+    {
+      id: 2,
+      name: t("alertsPage.templates.pest.name"),
+      type: "pest",
+      subject: t("alertsPage.templates.pest.subject"),
+      message: t("alertsPage.templates.pest.message"),
+    },
+  ];
+
+  const metrics = [
+    {
+      title: t("alertsPage.metrics.totalAlerts"),
+      value: "1,247",
+      change: t("alertsPage.metrics.thisWeek", { count: 23 }),
+      icon: Bell,
+    },
+    {
+      title: t("alertsPage.metrics.activeRecipients"),
+      value: "24,847",
+      change: t("alertsPage.metrics.newRecipients", { count: 156 }),
+      icon: CheckCircle,
+    },
+    {
+      title: t("alertsPage.metrics.deliveryRate"),
+      value: "96.8%",
+      change: t("alertsPage.metrics.improvement", { percent: 2.1 }),
+      icon: Send,
+    },
+    {
+      title: t("alertsPage.metrics.responseRate"),
+      value: "78.5%",
+      change: t("alertsPage.metrics.increase", { percent: 5.3 }),
+      icon: Clock,
+    },
+  ];
+
+  const deliveryMetrics = [
+    {
+      label: t("alertsPage.analytics.smsDelivery"),
+      rate: 98.5,
+      color: "bg-green-500",
+    },
+    {
+      label: t("alertsPage.analytics.appNotifications"),
+      rate: 94.2,
+      color: "bg-blue-500",
+    },
+    {
+      label: t("alertsPage.analytics.voiceCalls"),
+      rate: 87.8,
+      color: "bg-yellow-500",
+    },
+    {
+      label: t("alertsPage.analytics.emailDelivery"),
+      rate: 92.1,
+      color: "bg-purple-500",
+    },
+  ];
 
   const handleDistrictChange = (district, checked) => {
     if (checked) {
@@ -196,34 +274,72 @@ export default function AlertsPage() {
     }
   };
 
-  const handleSendAlert = () => {
-    // Simulate sending alert
-    console.log("Sending alert:", {
+  const handleSendAlert = async () => {
+    const payload = {
       type: selectedAlertType,
       title: alertTitle,
       message: alertMessage,
       districts: selectedDistricts,
       priority,
-    });
+    };
+    try {
+      await createAlert(payload);
+      setSelectedAlertType("");
+      setSelectedDistricts([]);
+      setAlertTitle("");
+      setAlertMessage("");
+      setPriority("Medium");
+      setIsComposing(false);
+    } catch (e) {
+      alert("Failed to send alert: " + e.message);
+    }
+  };
 
-    // Reset form
-    setSelectedAlertType("");
-    setSelectedDistricts([]);
-    setAlertTitle("");
-    setAlertMessage("");
-    setPriority("Medium");
-    setIsComposing(false);
+  const filteredSentAlerts = sentAlerts.filter((a) => {
+    const typeOk =
+      filterType === t("alertsPage.filters.allTypes") || a.type === filterType;
+    const statusOk =
+      filterStatus === t("alertsPage.filters.allStatus") ||
+      a.status === filterStatus;
+    return typeOk && statusOk;
+  });
+
+  const resetFilters = () => {
+    setFilterType(t("alertsPage.filters.allTypes"));
+    setFilterStatus(t("alertsPage.filters.allStatus"));
+  };
+
+  const beginEditTemplate = (tpl) => {
+    setEditingTemplate(tpl.id);
+    setTemplateDraft({ subject: tpl.subject, message: tpl.message });
+  };
+
+  const saveTemplateEdit = (tplId) => {
+    // In a real app we'd persist; here we update local state array
+    const idx = templates.findIndex((t) => t.id === tplId);
+    if (idx !== -1) {
+      templates[idx].subject = templateDraft.subject;
+      templates[idx].message = templateDraft.message;
+    }
+    setEditingTemplate(null);
+  };
+
+  const useTemplate = (tpl) => {
+    setIsComposing(true);
+    setSelectedAlertType(tpl.type);
+    setAlertTitle(tpl.subject);
+    setAlertMessage(tpl.message);
   };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case "Critical":
+      case t("alertsPage.priority.critical"):
         return "bg-red-100 text-red-800 border-red-200";
-      case "High":
+      case t("alertsPage.priority.high"):
         return "bg-orange-100 text-orange-800 border-orange-200";
-      case "Medium":
+      case t("alertsPage.priority.medium"):
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "Low":
+      case t("alertsPage.priority.low"):
         return "bg-green-100 text-green-800 border-green-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
@@ -257,10 +373,10 @@ export default function AlertsPage() {
             </Button>
             <div>
               <h1 className="text-xl font-semibold text-foreground">
-                Alerts & Notifications
+                {t("alertsPage.header.title")}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Manage and send notifications to farmers
+                {t("alertsPage.header.subtitle")}
               </p>
             </div>
           </div>
@@ -269,27 +385,31 @@ export default function AlertsPage() {
               <DialogTrigger asChild>
                 <Button className="bg-primary hover:bg-primary/90">
                   <Plus className="h-4 w-4 mr-2" />
-                  Compose Alert
+                  {t("alertsPage.header.composeAlert")}
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto animate-in fade-in-0 zoom-in-95 duration-200">
                 <DialogHeader>
-                  <DialogTitle>Compose New Alert</DialogTitle>
+                  <DialogTitle>{t("alertsPage.compose.title")}</DialogTitle>
                   <DialogDescription>
-                    Create and send notifications to farmers in selected regions
+                    {t("alertsPage.compose.description")}
                   </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-6 py-4">
                   {/* Alert Type */}
                   <div className="space-y-2">
-                    <Label htmlFor="alert-type">Alert Type</Label>
+                    <Label htmlFor="alert-type">
+                      {t("alertsPage.compose.alertType")}
+                    </Label>
                     <Select
                       value={selectedAlertType}
                       onValueChange={setSelectedAlertType}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select alert type" />
+                        <SelectValue
+                          placeholder={t("alertsPage.compose.selectAlertType")}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {alertTypes.map((type) => (
@@ -306,46 +426,60 @@ export default function AlertsPage() {
 
                   {/* Priority */}
                   <div className="space-y-2">
-                    <Label htmlFor="priority">Priority</Label>
+                    <Label htmlFor="priority">
+                      {t("alertsPage.compose.priority")}
+                    </Label>
                     <Select value={priority} onValueChange={setPriority}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Critical">Critical</SelectItem>
-                        <SelectItem value="High">High</SelectItem>
-                        <SelectItem value="Medium">Medium</SelectItem>
-                        <SelectItem value="Low">Low</SelectItem>
+                        <SelectItem value={t("alertsPage.priority.critical")}>
+                          {t("alertsPage.priority.critical")}
+                        </SelectItem>
+                        <SelectItem value={t("alertsPage.priority.high")}>
+                          {t("alertsPage.priority.high")}
+                        </SelectItem>
+                        <SelectItem value={t("alertsPage.priority.medium")}>
+                          {t("alertsPage.priority.medium")}
+                        </SelectItem>
+                        <SelectItem value={t("alertsPage.priority.low")}>
+                          {t("alertsPage.priority.low")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   {/* Title */}
                   <div className="space-y-2">
-                    <Label htmlFor="title">Alert Title</Label>
+                    <Label htmlFor="title">
+                      {t("alertsPage.compose.alertTitle")}
+                    </Label>
                     <Input
                       id="title"
                       value={alertTitle}
                       onChange={(e) => setAlertTitle(e.target.value)}
-                      placeholder="Enter alert title"
+                      placeholder={t("alertsPage.compose.enterAlertTitle")}
                     />
                   </div>
 
                   {/* Message */}
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
+                    <Label htmlFor="message">
+                      {t("alertsPage.compose.message")}
+                    </Label>
                     <Textarea
                       id="message"
                       value={alertMessage}
                       onChange={(e) => setAlertMessage(e.target.value)}
-                      placeholder="Enter alert message"
+                      placeholder={t("alertsPage.compose.enterAlertMessage")}
                       rows={6}
                     />
                   </div>
 
                   {/* District Selection */}
                   <div className="space-y-2">
-                    <Label>Target Districts</Label>
+                    <Label>{t("alertsPage.compose.targetDistricts")}</Label>
                     <div className="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto border border-border rounded-md p-3">
                       {districts.map((district) => (
                         <div
@@ -366,7 +500,8 @@ export default function AlertsPage() {
                       ))}
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      {selectedDistricts.length} districts selected
+                      {selectedDistricts.length}{" "}
+                      {t("alertsPage.compose.districtsSelected")}
                     </p>
                   </div>
 
@@ -376,7 +511,7 @@ export default function AlertsPage() {
                       variant="outline"
                       onClick={() => setIsComposing(false)}
                     >
-                      Cancel
+                      {t("alertsPage.compose.cancel")}
                     </Button>
                     <Button
                       onClick={handleSendAlert}
@@ -389,7 +524,7 @@ export default function AlertsPage() {
                       className="bg-primary hover:bg-primary/90"
                     >
                       <Send className="h-4 w-4 mr-2" />
-                      Send Alert
+                      {t("alertsPage.compose.sendAlert")}
                     </Button>
                   </div>
                 </div>
@@ -402,32 +537,7 @@ export default function AlertsPage() {
         <main className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              {
-                title: "Total Alerts Sent",
-                value: "1,247",
-                change: "+23 this week",
-                icon: Bell,
-              },
-              {
-                title: "Active Recipients",
-                value: "24,847",
-                change: "+156 new",
-                icon: CheckCircle,
-              },
-              {
-                title: "Delivery Rate",
-                value: "96.8%",
-                change: "+2.1% improvement",
-                icon: Send,
-              },
-              {
-                title: "Response Rate",
-                value: "78.5%",
-                change: "+5.3% increase",
-                icon: Clock,
-              },
-            ].map((metric, index) => (
+            {metrics.map((metric, index) => (
               <Card
                 key={metric.title}
                 className="animate-in fade-in-0 slide-in-from-bottom-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
@@ -457,9 +567,15 @@ export default function AlertsPage() {
             className="animate-in fade-in-0 slide-in-from-bottom-4 duration-700 delay-300"
           >
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="sent">Sent Alerts</TabsTrigger>
-              <TabsTrigger value="templates">Templates</TabsTrigger>
-              <TabsTrigger value="analytics">Analytics</TabsTrigger>
+              <TabsTrigger value="sent">
+                {t("alertsPage.tabs.sent")}
+              </TabsTrigger>
+              <TabsTrigger value="templates">
+                {t("alertsPage.tabs.templates")}
+              </TabsTrigger>
+              <TabsTrigger value="analytics">
+                {t("alertsPage.tabs.analytics")}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="sent" className="space-y-6">
@@ -468,17 +584,21 @@ export default function AlertsPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Filter className="h-5 w-5 text-primary" />
-                    <span>Filter Alerts</span>
+                    <span>{t("alertsPage.filters.title")}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Select value={filterType} onValueChange={setFilterType}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Filter by type" />
+                        <SelectValue
+                          placeholder={t("alertsPage.filters.filterByType")}
+                        />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="All Types">All Types</SelectItem>
+                        <SelectItem value={t("alertsPage.filters.allTypes")}>
+                          {t("alertsPage.filters.allTypes")}
+                        </SelectItem>
                         {alertTypes.map((type) => (
                           <SelectItem key={type.id} value={type.id}>
                             {type.label}
@@ -492,24 +612,36 @@ export default function AlertsPage() {
                       onValueChange={setFilterStatus}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Filter by status" />
+                        <SelectValue
+                          placeholder={t("alertsPage.filters.filterByStatus")}
+                        />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="All Status">All Status</SelectItem>
-                        <SelectItem value="Delivered">Delivered</SelectItem>
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="Failed">Failed</SelectItem>
+                        <SelectItem value={t("alertsPage.filters.allStatus")}>
+                          {t("alertsPage.filters.allStatus")}
+                        </SelectItem>
+                        <SelectItem value={t("alertsPage.status.delivered")}>
+                          {t("alertsPage.status.delivered")}
+                        </SelectItem>
+                        <SelectItem value={t("alertsPage.status.pending")}>
+                          {t("alertsPage.status.pending")}
+                        </SelectItem>
+                        <SelectItem value={t("alertsPage.status.failed")}>
+                          {t("alertsPage.status.failed")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
 
-                    <Button variant="outline">Reset Filters</Button>
+                    <Button variant="outline" onClick={resetFilters}>
+                      {t("alertsPage.filters.reset")}
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Sent Alerts List */}
               <div className="space-y-4">
-                {sentAlerts.map((alert, index) => (
+                {filteredSentAlerts.map((alert, index) => (
                   <Card
                     key={alert.id}
                     className="animate-in fade-in-0 slide-in-from-left-2 hover:shadow-md transition-all duration-200"
@@ -554,10 +686,11 @@ export default function AlertsPage() {
                         <div className="text-right space-y-2 lg:ml-6">
                           <div className="text-sm">
                             <p className="font-medium text-foreground">
-                              {alert.recipients.toLocaleString()} recipients
+                              {alert.recipients.toLocaleString()}{" "}
+                              {t("alertsPage.recipients")}
                             </p>
                             <p className="text-muted-foreground">
-                              {alert.deliveryRate}% delivered
+                              {alert.deliveryRate}% {t("alertsPage.delivered")}
                             </p>
                           </div>
                           <p className="text-xs text-muted-foreground">
@@ -590,33 +723,85 @@ export default function AlertsPage() {
                     <CardContent className="space-y-4">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-1">
-                          Subject
+                          {t("alertsPage.templates.subject")}
                         </p>
-                        <p className="text-sm bg-muted p-2 rounded">
-                          {template.subject}
-                        </p>
+                        {editingTemplate === template.id ? (
+                          <Input
+                            value={templateDraft.subject}
+                            onChange={(e) =>
+                              setTemplateDraft({
+                                ...templateDraft,
+                                subject: e.target.value,
+                              })
+                            }
+                          />
+                        ) : (
+                          <p className="text-sm bg-muted p-2 rounded">
+                            {template.subject}
+                          </p>
+                        )}
                       </div>
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-1">
-                          Message Template
+                          {t("alertsPage.templates.messageTemplate")}
                         </p>
-                        <div className="text-sm bg-muted p-3 rounded max-h-32 overflow-y-auto">
-                          <pre className="whitespace-pre-wrap text-xs">
-                            {template.message}
-                          </pre>
-                        </div>
+                        {editingTemplate === template.id ? (
+                          <Textarea
+                            value={templateDraft.message}
+                            onChange={(e) =>
+                              setTemplateDraft({
+                                ...templateDraft,
+                                message: e.target.value,
+                              })
+                            }
+                            rows={6}
+                          />
+                        ) : (
+                          <div className="text-sm bg-muted p-3 rounded max-h-32 overflow-y-auto">
+                            <pre className="whitespace-pre-wrap text-xs">
+                              {template.message}
+                            </pre>
+                          </div>
+                        )}
                       </div>
                       <div className="flex space-x-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="flex-1 bg-transparent"
-                        >
-                          Edit Template
-                        </Button>
-                        <Button size="sm" className="flex-1">
-                          Use Template
-                        </Button>
+                        {editingTemplate === template.id ? (
+                          <>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="flex-1 bg-transparent"
+                              onClick={() => setEditingTemplate(null)}
+                            >
+                              {t("common.cancel")}
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="flex-1"
+                              onClick={() => saveTemplateEdit(template.id)}
+                            >
+                              {t("common.save")}
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="flex-1 bg-transparent"
+                              onClick={() => beginEditTemplate(template)}
+                            >
+                              {t("alertsPage.templates.edit")}
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="flex-1"
+                              onClick={() => useTemplate(template)}
+                            >
+                              {t("alertsPage.templates.use")}
+                            </Button>
+                          </>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -628,7 +813,9 @@ export default function AlertsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Alert Distribution by Type</CardTitle>
+                    <CardTitle>
+                      {t("alertsPage.analytics.distributionByType")}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
@@ -663,32 +850,13 @@ export default function AlertsPage() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Delivery Performance</CardTitle>
+                    <CardTitle>
+                      {t("alertsPage.analytics.deliveryPerformance")}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {[
-                        {
-                          label: "SMS Delivery",
-                          rate: 98.5,
-                          color: "bg-green-500",
-                        },
-                        {
-                          label: "App Notifications",
-                          rate: 94.2,
-                          color: "bg-blue-500",
-                        },
-                        {
-                          label: "Voice Calls",
-                          rate: 87.8,
-                          color: "bg-yellow-500",
-                        },
-                        {
-                          label: "Email Delivery",
-                          rate: 92.1,
-                          color: "bg-purple-500",
-                        },
-                      ].map((metric, index) => (
+                      {deliveryMetrics.map((metric, index) => (
                         <div
                           key={metric.label}
                           className="animate-in fade-in-0 slide-in-from-right-2"

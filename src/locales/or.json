@@ -312,5 +312,713 @@
       "inactive": "ନିଷ୍କ୍ରିୟ",
       "pending": "ବିଚାରାଧୀନ"
     }
-  }
+  },
+  "yieldPage": {
+    "header": {
+      "title": "ଫସଲ ଉତ୍ପାଦନ ଓ ବିଶ୍ଳେଷଣ",
+      "subtitle": "ସମ୍ପୂର୍ଣ୍ଣ ଫସଲ କାର୍ଯ୍ୟଦକ୍ଷତା ବିଶ୍ଳେଷଣ",
+      "export": "ରିପୋର୍ଟ ଏକ୍ସପୋର୍ଟ କରନ୍ତୁ"
+    },
+    "filters": {
+      "title": "ବିଶ୍ଳେଷଣ ଫିଲ୍ଟର୍",
+      "year": "ବର୍ଷ ବାଛନ୍ତୁ",
+      "crop": "ଫସଲ ବାଛନ୍ତୁ",
+      "district": "ଜିଲ୍ଲା ବାଛନ୍ତୁ",
+      "reset": "ଫିଲ୍ଟର୍ ରିସେଟ୍ କରନ୍ତୁ"
+    },
+    "metrics": {
+      "totalProduction": "ମୋଟ ଉତ୍ପାଦନ",
+      "averageYield": "ସରାସରି ଉତ୍ପାଦନ",
+      "cultivatedArea": "ଚାଷ ଅଞ୍ଚଳ",
+      "efficiencyRate": "ଦକ୍ଷତା ହାର",
+      "fromLastYear": "ଗତ ବର୍ଷ ଠାରୁ"
+    },
+    "tabs": {
+      "trends": "ଉତ୍ପାଦନ ପ୍ରବଣତା",
+      "seasonal": "ମୌସୁମୀ ବିଶ୍ଳେଷଣ",
+      "comparison": "ଫସଲ ତୁଳନା",
+      "districts": "ଜିଲ୍ଲା କାର୍ଯ୍ୟଦକ୍ଷତା"
+    },
+    "charts": {
+      "yieldTrends": {
+        "title": "5-ବର୍ଷ ଉତ୍ପାଦନ ପ୍ରବଣତା",
+        "description": "ଫସଲ ପ୍ରକାର ଅନୁଯାୟୀ ଇତିହାସିକ ଉତ୍ପାଦନ"
+      },
+      "seasonal": {
+        "title": "ମୌସୁମୀ ଉତ୍ପାଦନ ବିଶ୍ଳେଷଣ",
+        "description": "ମୌସୁମରେ ଉତ୍ପାଦନ ବନାମ ଲକ୍ଷ୍ୟ"
+      },
+      "comparison": {
+        "area": "ଫସଲ ଅଞ୍ଚଳ ବିତରଣ",
+        "yield": "ଫସଲ ଅନୁସାରେ ଦକ୍ଷତା"
+      },
+      "district": {
+        "title": "ଜିଲ୍ଲା ଭିତ୍ତିକ କାର୍ଯ୍ୟଦକ୍ଷତା",
+        "description": "ମୁଖ୍ୟ ଜିଲ୍ଲାଗୁଡ଼ିକରେ ଉତ୍ପାଦନ ତୁଳନା"
+      },
+      "monthly": {
+        "title": "ମାସିକ ଫସଲ ପ୍ରଗତି",
+        "description": "ଏକାବର୍ଷ ଧରି ବିଆ, ବୃଦ୍ଧି ଓ କଟାଇ ପ୍ରଗତି"
+      }
+    },
+    "crops": {
+      "all": "ସମସ୍ତ ଫସଲ",
+      "rice": "ଚାଉଳ",
+      "wheat": "ଗହମ",
+      "sugarcane": "ଆଖୁ",
+      "vegetables": "ଶାଗସବ୍ଜି",
+      "pulses": "ଡାଲି"
+    },
+    "districts": {
+      "all": "ସମସ୍ତ ଜିଲ୍ଲା",
+      "cuttack": "କଟକ",
+      "bhubaneswar": "ଭୁବନେଶ୍ୱର",
+      "puri": "ପୁରୀ",
+      "khordha": "ଖୋର୍ଦ୍ଧା",
+      "ganjam": "ଗଞ୍ଜାମ"
+    },
+    "months": {
+      "jan": "ଜାନୁ",
+      "feb": "ଫେବ୍",
+      "mar": "ମାର୍",
+      "apr": "ଏପ୍ରି",
+      "may": "ମେ",
+      "jun": "ଜୁନ୍"
+    }
+  },
+  "pestTracking": {
+    "header": {
+      "title": "କୀଟ ଓ ରୋଗ ଟ୍ରାକିଂ",
+      "subtitle": "ଫସଲ ସ୍ୱାସ୍ଥ୍ୟ ଜୋଖିମ ନିରୀକ୍ଷଣ ଓ ପରିଚାଳନା",
+      "activeOutbreaks": "{{count}} ସକ୍ରିୟ ପ୍ରକୋପ"
+    },
+    "alerts": {
+      "critical": "ଗୁରୁତ୍ବପୂର୍ଣ୍ଣ ସତର୍କତା",
+      "description": "କଟକ ଜିଲ୍ଲାରେ ବ୍ରାଉନ୍ ପ୍ଲାଣ୍ଟ୍ ହୋପର୍ ପ୍ରକୋପ; 2,500 ହେକ୍ଟର୍ ପ୍ରଭାବିତ। ତତ୍କାଳ କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ଆବଶ୍ୟକ।"
+    },
+    "metrics": {
+      "activeOutbreaks": "ସକ୍ରିୟ ପ୍ରକୋପ",
+      "affectedArea": "ପ୍ରଭାବିତ ଅଞ୍ଚଳ",
+      "farmersImpacted": "ପ୍ରଭାବିତ କୃଷକ",
+      "controlRate": "ନିୟନ୍ତ୍ରଣ ହାର",
+      "change": {
+        "activeOutbreaks": "ଏହି ସପ୍ତାହ +2",
+        "affectedArea": "ଗତ ମାସରୁ +15%",
+        "farmersImpacted": "ଏହି ସପ୍ତାହ +8%",
+        "controlRate": "+12% ସୁଧାର"
+      }
+    },
+    "filters": {
+      "title": "ପ୍ରକୋପ ଫିଲ୍ଟର୍ କରନ୍ତୁ",
+      "district": "ଜିଲ୍ଲା ବାଛନ୍ତୁ",
+      "severity": "ତୀବ୍ରତା ବାଛନ୍ତୁ",
+      "allDistricts": "ସମସ୍ତ ଜିଲ୍ଲା",
+      "allSeverity": "ସମସ୍ତ ତୀବ୍ରତା",
+      "reset": "ଫିଲ୍ଟର୍ ରିସେଟ୍ କରନ୍ତୁ"
+    },
+    "tabs": {
+      "heatmap": "କୀଟ ହିଟମ୍ୟାପ୍",
+      "outbreaks": "ସକ୍ରିୟ ପ୍ରକୋପ",
+      "diseases": "ରୋଗ ସତର୍କତା",
+      "treatment": "ଚିକିତ୍ସା ଗାଇଡ୍"
+    },
+    "outbreaks": {
+      "crop": "ଫସଲ",
+      "district": "ଜିଲ୍ଲା",
+      "area": "ପ୍ରଭାବିତ ଅଞ୍ଚଳ",
+      "farmers": "କୃଷକ",
+      "view": "ବିବରଣୀ",
+      "alert": "ସତର୍କତା ପଠାନ୍ତୁ"
+    },
+    "disease": {
+      "risk": "{{severity}} ଜୋଖିମ",
+      "affecting": "{{crop}} ଫସଲ ପ୍ରଭାବିତ",
+      "symptoms": "ଲକ୍ଷଣ",
+      "prevention": "ପ୍ରତିରୋଧ",
+      "treatment": "ଚିକିତ୍ସା"
+    },
+    "heatmap": {
+      "title": "ଫସଲ ସ୍ୱାସ୍ଥ୍ୟ ହିଟମ୍ୟାପ୍"
+    },
+    "treatment": {
+      "header": "{{pest}} ଚିକିତ୍ସା",
+      "chemical": "ସୁପାରିଶୀୟ ରାସାୟନିକ",
+      "dosage": "ମାତ୍ରା",
+      "application": "ପ୍ରୟୋଗ ପ୍ରଣାଳୀ",
+      "frequency": "ପୁନରାବୃତ୍ତିତା"
+    },
+    "severity": {
+      "high": "ଉଚ୍ଚ",
+      "medium": "ମଧ୍ୟମ",
+      "low": "ନିମ୍ନ"
+    },
+    "status": {
+      "active": "ସକ୍ରିୟ",
+      "controlled": "ନିୟନ୍ତ୍ରିତ",
+      "monitoring": "ନିରୀକ୍ଷଣ",
+      "treatment": "ଚିକିତ୍ସା"
+    },
+    "data": {
+      "pests": {
+        "brownPlantHopper": "ବ୍ରାଉନ୍ ପ୍ଲାଣ୍ଟ୍ ହୋପର୍",
+        "stemBorer": "ତଣ୍ଟ ବୋରର୍",
+        "aphids": "ଏଫିଡ୍ସ",
+        "leafCurlVirus": "ପାତା ଗାଠି ୱାଇରସ୍"
+      },
+      "crops": {
+        "rice": "ଚାଉଳ",
+        "wheat": "ଗହମ",
+        "tomato": "ଟମାଟର୍"
+      },
+      "districts": {
+        "cuttack": "କଟକ",
+        "puri": "ପୁରୀ",
+        "bhubaneswar": "ଭୁବନେଶ୍ୱର",
+        "khordha": "ଖୋର୍ଦ୍ଧା",
+        "balasore": "ବାଲେଶ୍ୱର",
+        "bhadrak": "ଭଦ୍ରକ",
+        "nayagarh": "ନୟାଗଡ଼"
+      },
+      "diseases": {
+        "blastDisease": "ବ୍ଲାଷ୍ଟ ରୋଗ",
+        "powderyMildew": "ପାଉଡେରି ମିଲ୍ଡିଉ",
+        "bacterialWilt": "ବ୍ୟାକ୍ଟେରିଆଲ୍ ଉଇଲ୍ଟ୍"
+      },
+      "symptoms": {
+        "blastDisease": "ପାତାରେ ଧୂସର ଦାଗ, ଗଲା କୁହୁଡ଼ା",
+        "powderyMildew": "ପାତାରେ ସଫେଦ ପାଉଡର୍ ଭଳି ବୃଦ୍ଧି",
+        "bacterialWilt": "ପାତା ମୁର୍ଝାଇବା, ପୀତିମାନ୍ତ"
+      },
+      "prevention": {
+        "blastDisease": "ପ୍ରତିରୋଧକ ଜାତି, ଠିକ୍ ଡ୍ରେନେଜ୍",
+        "powderyMildew": "ଅତ୍ୟଧିକ ଘନତା ରହିବେନି, ଠିକ୍ ୱେଣ୍ଟିଲେସନ୍",
+        "bacterialWilt": "ଫସଲ ପରିବର୍ତ୍ତନ, ମାଟି ଜୀବାଣୁନାଶନ"
+      },
+      "treatment": {
+        "blastDisease": "ଫଂଗିସାଇଡ୍ ସ୍ପ୍ରେ (ଟ୍ରାଇସାଇକ୍ଲୋଜୋଲ୍)",
+        "powderyMildew": "ଗନ୍ଧକ ଆଧାରିତ ଫଂଗିସାଇଡ୍",
+        "bacterialWilt": "ତାମ୍ବା ଆଧାରିତ ବ୍ୟାକ୍ଟିରିସାଇଡ୍"
+      },
+      "weatherAdvisories": {
+        "heavyRainfall": {
+          "title": "ଭାରୀ ବର୍ଷା ଜାଗୃକତା",
+          "description": "ଉପକୂଳ ଜିଲ୍ଲାରେ ଭାରୀ ବର୍ଷା ସମ୍ଭାବନା; ଫଂଗାଲ୍ ରୋଗ ଜୋଖିମ ବଢ଼ିପାରେ"
+        },
+        "temperatureRise": {
+          "title": "ତାପମାତ୍ରା ବୃଦ୍ଧି ସତର୍କତା",
+          "description": "ତାପମାତ୍ରା ବୃଦ୍ଧି କୀଟ ପ୍ରଜନନ ପାଇଁ ଉପଯୋଗୀ"
+        }
+      },
+      "treatments": {
+        "brownPlantHopper": {
+          "chemical": "ଇମିଡାକ୍ଲୋପ୍ରିଡ୍ 17.8% SL",
+          "dosage": "0.3 ମିଲି/ଲିଟର୍ ପାଣି",
+          "application": "ସନ୍ଧ୍ୟାବେଳେ ପାତା ସ୍ପ୍ରେ",
+          "frequency": "10 ଦିନ ମଧ୍ୟରେ 2-3 ପ୍ରୟୋଗ"
+        },
+        "stemBorer": {
+          "chemical": "କ୍ଲୋରାଣ୍ଟ୍ରାନିଲିପ୍ରୋଲ୍ 18.5% SC",
+          "dosage": "0.4 ମିଲି/ଲିଟର୍ ପାଣି",
+          "application": "ମୁଢ଼ ଓ ତଣ୍ଟରେ ସ୍ପ୍ରେ",
+          "frequency": "ଆରମ୍ଭିକ ଆକ୍ରମଣରେ ପ୍ରୟୋଗ"
+        }
+      }
+    }
+  },
+  "marketPage": {
+    "header": {
+      "title": "ବଜାର ମୂଲ୍ୟ",
+      "subtitle": "ରିଅଲ୍-ଟାଇମ୍ ଫସଲ ମୂଲ୍ୟ ନିରୀକ୍ଷଣ ଓ ବିଶ୍ଳେଷଣ",
+      "refresh": "ମୂଲ୍ୟ ରିଫ୍ରେଶ୍ କରନ୍ତୁ"
+    },
+    "crops": {
+      "riceCommon": "ଚାଉଳ (ସାଧାରଣ)",
+      "riceBasmati": "ଚାଉଳ (ବାସମତୀ)",
+      "wheat": "ଗହମ",
+      "sugarcane": "ଆଖୁ",
+      "onion": "ପିଆଜ",
+      "potato": "ଆଳୁ"
+    },
+    "units": {
+      "perQuintal": "ପ୍ରତି କ୍ୱିଣ୍ଟାଲ୍"
+    },
+    "districts": {
+      "bhubaneswar": "ଭୁବନେଶ୍ୱର",
+      "cuttack": "କଟକ",
+      "puri": "ପୁରୀ",
+      "khordha": "ଖୋର୍ଦ୍ଧା",
+      "balasore": "ବାଲେଶ୍ୱର",
+      "ganjam": "ଗଞ୍ଜାମ"
+    },
+    "updated": {
+      "1h": "1 ଘଣ୍ଟା ପୂର୍ବରୁ",
+      "2h": "2 ଘଣ୍ଟା ପୂର୍ବରୁ",
+      "3h": "3 ଘଣ୍ଟା ପୂର୍ବରୁ",
+      "4h": "4 ଘଣ୍ଟା ପୂର୍ବରୁ"
+    },
+    "alerts": {
+      "onion": "ଶେଷ 24 ଘଣ୍ଟାରେ ପିଆଜ ମୂଲ୍ୟ 8.5% ବଢ଼ିଛି",
+      "riceCommon": "ଚାଉଳ ମୂଲ୍ୟ ₹2,850/କ୍ୱିଣ୍ଟାଲ୍ ମାସିକ ସର୍ବୋଚ୍ଚ",
+      "potato": "ଆଳୁ ମୂଲ୍ୟ ସମର୍ଥନ ସ୍ତର ତଳେ"
+    },
+    "charts": {
+      "rice": "ଚାଉଳ (₹/କ୍ୱିଣ୍ଟାଲ୍)",
+      "wheat": "ଗହମ (₹/କ୍ୱିଣ୍ଟାଲ୍)",
+      "onion": "ପିଆଜ (₹/କ୍ୱିଣ୍ଟାଲ୍)",
+      "potato": "ଆଳୁ (₹/କ୍ୱିଣ୍ଟାଲ୍)"
+    },
+    "metrics": {
+      "averagePriceIndex": "ସରାସରି ମୂଲ୍ୟ ସୂଚକାଙ୍କ",
+      "priceVolatility": "ମୂଲ୍ୟ ଅସ୍ଥିରତା",
+      "activeMarkets": "ସକ୍ରିୟ ବଜାର",
+      "dailyUpdates": "ଦୈନିକ ଅପଡେଟ୍",
+      "newMarkets": "+{{count}} ନୂଆ",
+      "todayUpdates": "+{{count}} ଆଜି"
+    },
+    "tabs": {
+      "current": "ବର୍ତ୍ତମାନ ମୂଲ୍ୟ",
+      "trends": "ମୂଲ୍ୟ ପ୍ରବଣତା",
+      "comparison": "ବଜାର ତୁଳନା"
+    },
+    "filters": {
+      "title": "ମୂଲ୍ୟ ଫିଲ୍ଟର୍ କରନ୍ତୁ",
+      "selectMarket": "ବଜାର ବାଛନ୍ତୁ",
+      "selectCrop": "ଫସଲ ବାଛନ୍ତୁ",
+      "allMarkets": "ସମସ୍ତ ବଜାର",
+      "allCrops": "ସମସ୍ତ ଫସଲ",
+      "rice": "ଚାଉଳ",
+      "wheat": "ଗହମ",
+      "vegetables": "ଶାଗସବ୍ଜି",
+      "reset": "ଫିଲ୍ଟର୍ ରିସେଟ୍ କରନ୍ତୁ"
+    },
+    "alerts2": {
+      "title": "ମୂଲ୍ୟ ସତର୍କତା",
+      "description": "ସମ୍ପ୍ରତି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ମୂଲ୍ୟ ପରିବର୍ତ୍ତନ"
+    },
+    "trends": {
+      "title": "ମୂଲ୍ୟ ପ୍ରବଣତା (ଶେଷ 20 ଦିନ)",
+      "description": "ମୁଖ୍ୟ ଫସଲ ମୂଲ୍ୟ ଇତିହାସର ବିଶ୍ଳେଷଣ"
+    },
+    "comparison": {
+      "title": "ବଜାର-ଭିତ୍ତିକ ମୂଲ୍ୟ ତୁଳନା",
+      "description": "ଭିନ୍ନ ବଜାରରେ ମୂଲ୍ୟ ତୁଳନା କରନ୍ତୁ"
+    },
+    "previous": "ପୂର୍ବବର୍ତ୍ତୀ"
+  },
+  "alertsPage": {
+    "header": {
+      "title": "ସତର୍କତା ଓ ସୂଚନା",
+      "subtitle": "କୃଷକଙ୍କୁ ସୂଚନା ପଠାଇବା ଓ ପରିଚାଳନା କରନ୍ତୁ",
+      "composeAlert": "ନୂଆ ସତର୍କତା ଲେଖନ୍ତୁ"
+    },
+    "compose": {
+      "title": "ନୂଆ ସତର୍କତା ତିଆରି କରନ୍ତୁ",
+      "description": "ଚୟନିତ ଅଞ୍ଚଳର କୃଷକଙ୍କୁ ସୂଚନା ସୃଷ୍ଟି କରି ପଠାନ୍ତୁ",
+      "alertType": "ସତର୍କତା ପ୍ରକାର",
+      "selectAlertType": "ପ୍ରକାର ବାଛନ୍ତୁ",
+      "priority": "ପ୍ରାଥମିକତା",
+      "alertTitle": "ସତର୍କତା ଶୀର୍ଷକ",
+      "enterAlertTitle": "ଶୀର୍ଷକ ଲେଖନ୍ତୁ",
+      "message": "ସନ୍ଦେଶ",
+      "enterAlertMessage": "ସନ୍ଦେଶ ଲେଖନ୍ତୁ",
+      "targetDistricts": "ଲକ୍ଷ୍ୟ ଜିଲ୍ଲା",
+      "districtsSelected": "ଜିଲ୍ଲା ଚୟନ ହୋଇଛି",
+      "cancel": "ରଦ୍ଦ କରନ୍ତୁ",
+      "sendAlert": "ସତର୍କତା ପଠାନ୍ତୁ"
+    },
+    "metrics": {
+      "totalAlerts": "ମୋଟ ପଠାଇଥିବା ସତର୍କତା",
+      "thisWeek": "ଏହି ସପ୍ତାହ +{{count}}",
+      "activeRecipients": "ସକ୍ରିୟ ପ୍ରାପ୍ତା",
+      "newRecipients": "+{{count}} ନୂଆ",
+      "deliveryRate": "ଡିଲିଭେରି ହାର",
+      "improvement": "+{{percent}}% ସୁଧାର",
+      "responseRate": "ପ୍ରତିକ୍ରିୟା ହାର",
+      "increase": "+{{percent}}% ବୃଦ୍ଧି"
+    },
+    "tabs": {
+      "sent": "ପଠାଇଥିବା",
+      "templates": "ଟେମ୍ପଲେଟ୍",
+      "analytics": "ବିଶ୍ଳେଷଣ"
+    },
+    "filters": {
+      "title": "ସତର୍କତା ଫିଲ୍ଟର୍ କରନ୍ତୁ",
+      "filterByType": "ପ୍ରକାର ଅନୁଯାୟୀ",
+      "filterByStatus": "ସ୍ଥିତି ଅନୁଯାୟୀ",
+      "allTypes": "ସମସ୍ତ ପ୍ରକାର",
+      "allStatus": "ସମସ୍ତ ସ୍ଥିତି",
+      "reset": "ଫିଲ୍ଟର୍ ରିସେଟ୍"
+    },
+    "priority": {
+      "critical": "ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ",
+      "high": "ଉଚ୍ଚ",
+      "medium": "ମଧ୍ୟମ",
+      "low": "ନିମ୍ନ"
+    },
+    "status": {
+      "delivered": "ପହଞ୍ଚିଲା",
+      "pending": "ବିଚାରାଧୀନ",
+      "failed": "ବିଫଳ"
+    },
+    "sentAlerts": {
+      "weather": {
+        "title": "ଭାରୀ ବର୍ଷା ସତର୍କତା",
+        "message": "ଉପକୂଳ ଜିଲ୍ଲାଗୁଡ଼ିକରେ ଭାରୀ ଠାରୁ ଅତିଭାରୀ ବର୍ଷା ସମ୍ଭାବନା। ଦାଢିଆ ଫସଲ ପାଇଁ ସତର୍କତା ନିଅନ୍ତୁ।"
+      },
+      "pest": {
+        "title": "ବ୍ରାଉନ୍ ପ୍ଲାଣ୍ଟ୍ ହୋପର୍ ଆଲର୍ଟ",
+        "message": "ଧାନ ଖେତରେ ବ୍ରାଉନ୍ ପ୍ଲାଣ୍ଟ୍ ହୋପର୍ ପ୍ରକୋପ ଚିହ୍ନଟ। ପରାମର୍ଶିତ କୀଟନାଶକ ତତ୍କ୍ଷଣାତ୍ ସ୍ପ୍ରେ କରନ୍ତୁ।"
+      },
+      "scheme": {
+        "title": "ପିଏମ-କିସାନ ପଞ୍ଜୀକରଣ ସ୍ମରଣିକା",
+        "message": "ପିଏମ-କିସାନ ଯୋଜନା ପଞ୍ଜୀକରଣର ଶେଷ ତାରିଖ ନିକଟରେ। ଦୟାକରି ସମୟରେ ଆବେଦନ କରନ୍ତୁ।"
+      },
+      "market": {
+        "title": "ଚାଉଳ ମୂଲ୍ୟ ଅପଡେଟ୍",
+        "message": "ମୁଖ୍ୟ ବଜାରରେ ଚାଉଳ ମୂଲ୍ୟ 8% ବଢ଼ିଛି। ଭୁବନେଶ୍ୱର ବଜାରରେ ବର୍ତ୍ତମାନ ହାର: ₹2,850/କ୍ୱିଣ୍ଟାଲ୍।"
+      }
+    },
+    "templates": {
+      "weather": {
+        "name": "ପାଣିପାଗ ସତର୍କତା ଟେମ୍ପଲେଟ୍",
+        "subject": "ପାଣିପାଗ ସତର୍କତା: {weather_type} ସମ୍ଭାବନା",
+        "message": "ପ୍ରିୟ କୃଷକ,\n\nଆପଣଙ୍କ ଅଞ୍ଚଳରେ {start_date} ଠାରୁ {end_date} ପର୍ଯ୍ୟନ୍ତ {weather_type} ସମ୍ଭାବନା ରହିଛି। ଦୟାକରି ନିମ୍ନ ସତର୍କତା ନିଅନ୍ତୁ:\n\n• {precaution_1}\n• {precaution_2}\n• {precaution_3}\n\nଅଧିକ ସୂଚନା ପାଇଁ ଆପଣଙ୍କ ଲୋକାଲ୍ କୃଷି ଅଧିକାରୀଙ୍କୁ ସମ୍ପର୍କ କରନ୍ତୁ।\n\nଶୁଭେଚ୍ଛାସହ,\nଇଲେକ୍ଟ୍ରୋନିକ୍ସ ଓ ଆଇଟି ବିଭାଗ, ଓଡ଼ିଶା"
+      },
+      "pest": {
+        "name": "କୀଟ ସତର୍କତା ଟେମ୍ପଲେଟ୍",
+        "subject": "ତତ୍କାଳ: {pest_name} ସତର୍କତା",
+        "message": "ପ୍ରିୟ କୃଷକ,\n\nଆପଣଙ୍କ ଅଞ୍ଚଳର {crop_name} ଖେତରେ {pest_name} ଚିହ୍ନଟ ହୋଇଛି। ତତ୍କାଳ କାର୍ଯ୍ୟ ଆବଶ୍ୟକ:\n\n• {chemical_name} କୁ {dosage} ରେ ସ୍ପ୍ରେ କରନ୍ତୁ\n• {application_time} ସମୟରେ ପ୍ରୟୋଗ କରନ୍ତୁ\n• ଆବଶ୍ୟକ ହେଲେ {repeat_interval} ପରେ ପୁନରାବୃତ୍ତି କରନ୍ତୁ\n\nସହାଯ୍ୟ ପାଇଁ ହେଲ୍ପଲାଇନ୍: 1800-XXX-XXXX।\n\nଶୁଭେଚ୍ଛାସହ,\nଇଲେକ୍ଟ୍ରୋନିକ୍ସ ଓ ଆଇଟି ବିଭାଗ, ଓଡ଼ିଶା"
+      },
+      "subject": "ବିଷୟ",
+      "messageTemplate": "ସନ୍ଦେଶ ଟେମ୍ପଲେଟ୍",
+      "edit": "ଟେମ୍ପଲେଟ୍ ସମ୍ପାଦନା",
+      "use": "ଟେମ୍ପଲେଟ୍ ବ୍ୟବହାର"
+    },
+    "analytics": {
+      "distributionByType": "ପ୍ରକାର ଅନୁଯାୟୀ ସତର୍କତା ବିତରଣ",
+      "deliveryPerformance": "ଡିଲିଭେରି କାର୍ଯ୍ୟଦକ୍ଷତା",
+      "smsDelivery": "SMS ଡିଲିଭେରି",
+      "appNotifications": "ଆପ୍ ସୂଚନା",
+      "voiceCalls": "ଭଏସ୍ କଲ୍",
+      "emailDelivery": "ଇମେଲ୍ ଡିଲିଭେରି"
+    },
+    "recipients": "ପ୍ରାପ୍ତା",
+    "delivered": "ପହଞ୍ଚିଲା",
+    "districts": {
+      "puri": "ପୁରୀ",
+      "balasore": "ବାଲେଶ୍ୱର",
+      "bhadrak": "ଭଦ୍ରକ",
+      "cuttack": "କଟକ",
+      "khordha": "ଖୋର୍ଦ୍ଧା",
+      "bhubaneswar": "ଭୁବନେଶ୍ୱର",
+      "allDistricts": "ସମସ୍ତ ଜିଲ୍ଲା"
+    },
+    "notifications": {
+      "weather": "ପାଣିପାଗ ସତର୍କତା",
+      "pest": "କୀଟ ସତର୍କତା",
+      "market": "ବଜାର ଅପଡେଟ୍",
+      "scheme": "ଯୋଜନା ସୂଚନା",
+      "advisory": "ପରାମର୍ଶ"
+    }
+  },
+  "schemes": {
+    "dialog": {
+    "addTitle": "ନୂତନ ଯୋଜନା ଯୋଡନ୍ତୁ",
+    "addDescription": "ସରକାରୀ ଯୋଜନା ଏବଂ ସବସିଡି"
+  },
+  "form": {
+    "beneficiaries": "ଲାଭାନ୍ବିତ",
+    "targetBeneficiaries": "ଲକ୍ଷ୍ୟ ଲାଭାନ୍ବିତ",
+    "totalBudget": "ମୋଟ ବଜେଟ୍",
+    "name": "ନାମ",
+    "description": "ବର୍ଣ୍ଣନା",
+    "category": "ଶ୍ରେଣୀ",
+    "status": "ସ୍ଥିତି"
+  },
+    "header": {
+      "title": "ଯୋଜନା ଓ ସହାୟତା",
+      "subtitle": "ସରକାରୀ ଯୋଜନା ଓ ସହାୟତା ପରିଚାଳନା"
+    },
+    "metrics": {
+      "totalSchemes": "ମୋଟ ଯୋଜନା",
+      "totalBeneficiaries": "ମୋଟ ଲାଭାନ୍ୱିତ",
+      "budgetUtilized": "ବ୍ୟବହୃତ ବଜେଟ୍",
+      "avgEnrollment": "ସରାସରି ନାମଙ୍କନ ହାର",
+      "changes": {
+        "totalSchemes": "ଏହି ବର୍ଷ +1 ନୂଆ",
+        "totalBeneficiaries": "ଏହି ମାସ +2,340",
+        "budgetUtilized": "ମୋଟ ବଜେଟ୍ର {{percentage}}%",
+        "avgEnrollment": "+5.3% ସୁଧାର"
+      },
+      "values": {
+        "budgetUtilized": "₹{{amount}} କୋଟି",
+        "budget": "₹{{amount}} କୋଟି"
+      }
+    },
+    "filters": {
+      "title": "ଯୋଜନା ଫିଲ୍ଟର୍ କରନ୍ତୁ",
+      "selectCategory": "ଶ୍ରେଣୀ ବାଛନ୍ତୁ",
+      "selectStatus": "ସ୍ଥିତି ବାଛନ୍ତୁ",
+      "allCategories": "ସମସ୍ତ ଶ୍ରେଣୀ",
+      "allStatus": "ସମସ୍ତ ସ୍ଥିତି"
+    },
+    "tabs": {
+      "activeSchemes": "ସକ୍ରିୟ ଯୋଜନା",
+      "analytics": "ବିଶ୍ଳେଷଣ",
+      "performance": "କାର୍ଯ୍ୟଦକ୍ଷତା"
+    },
+    "buttons": {
+      "export": "ରିପୋର୍ଟ ଏକ୍ସପୋର୍ଟ",
+      "addScheme": "ଯୋଜନା ଯୋଡନ୍ତୁ",
+      "reset": "ଫିଲ୍ଟର୍ ରିସେଟ୍",
+      "viewDetails": "ବିବରଣୀ ଦେଖନ୍ତୁ"
+    },
+    "labels": {
+      "budgetUtilization": "ବଜେଟ୍ ବ୍ୟବହାର",
+      "beneficiaries": "ଲାଭାନ୍ୱିତ",
+      "launchDate": "ଆରମ୍ଭ ତାରିଖ",
+      "totalBudget": "ମୋଟ ବଜେଟ୍",
+      "eligibility": "ଯୋଗ୍ୟତା",
+      "benefits": "ଲାଭ"
+    },
+    "status": {
+      "active": "ସକ୍ରିୟ",
+      "new": "ନୂଆ",
+      "completed": "ସମ୍ପୂର୍ଣ୍ଣ"
+    },
+    "charts": {
+      "schemeDistribution": "ଶ୍ରେଣୀ ଅନୁଯାୟୀ ଯୋଜନା ବିତରଣ",
+      "monthlyEnrollment": "ମାସିକ ନାମଙ୍କନ ପ୍ରବଣତା",
+      "enrolled": "ନାମ ଲେଖା",
+      "target": "ଲକ୍ଷ୍ୟ"
+    },
+    "performance": {
+      "title": "ଜିଲ୍ଲା ଭିତ୍ତିକ ପ୍ରଦର୍ଶନ",
+      "description": "ଜିଲ୍ଲା ଅନୁସାରେ ଲାଭାନ୍ୱିତ ଓ ବ୍ୟବହାର ହାର",
+      "beneficiaries": "{{count}} ଲାଭାନ୍ୱିତ",
+      "utilization": "{{percentage}}% ବ୍ୟବହାର"
+    },
+    "data": {
+      "categories": {
+        "incomeSupport": "ଆୟ ସହଯୋଗ",
+        "insurance": "ବୀମା",
+        "credit": "ଋଣ",
+        "soilHealth": "ମାଟି ସ୍ୱାସ୍ଥ୍ୟ",
+        "sustainableAgriculture": "ସସ୍ୟ ସୁସ୍ଥିରତା"
+      },
+      "schemes": {
+        "pmKisan": {
+          "name": "ପିଏମ-କିସାନ",
+          "description": "କୃଷକଙ୍କୁ ପ୍ରତ୍ୟକ୍ଷ ଆୟ ସହଯୋଗ",
+          "eligibility": "ଚାଷ ଯୋଗ୍ୟ ଜମି ଥିବା ଛୋଟ/ସୀମାନ୍ତ କୃଷକ",
+          "benefits": "ବର୍ଷକୁ ₹6,000 ତିନୋଟି କିଷ୍ଟିରେ"
+        },
+        "pmfby": {
+          "name": "ପ୍ରଧାନମନ୍ତ୍ରୀ ଫସଲ ବୀମା ଯୋଜନା",
+          "description": "କୃଷକଙ୍କ ପାଇଁ ଫସଲ ବୀମା",
+          "eligibility": "ଅଧିସୂଚିତ ଫସଲ ଚାଷୀମାନେ",
+          "benefits": "ଫସଲ ପାଇଁ ସମଗ୍ର ଜୋଖିମ କଭର୍"
+        },
+        "soilHealth": {
+          "name": "ମାଟି ସ୍ୱାସ୍ଥ୍ୟ କାର୍ଡ ଯୋଜନା",
+          "description": "ମାଟି ପରୀକ୍ଷା ଓ ସ୍ୱାସ୍ଥ୍ୟ ନିରୀକ୍ଷଣ",
+          "eligibility": "କୃଷି ଜମି ଥିବା ସମସ୍ତ",
+          "benefits": "ନିଶ୍ୱଳ୍କ ମାଟି ପରୀକ୍ଷା ଓ ପୋଷକ ପରାମର୍ଶ"
+        },
+        "kisanCredit": {
+          "name": "କିସାନ୍ କ୍ରେଡିଟ୍ କାର୍ଡ",
+          "description": "କୃଷି କାର୍ଯ୍ୟ ପାଇଁ ଋଣ ସହଯୋଗ",
+          "eligibility": "ବୈଧ ଜମି ରେକର୍ଡ ଥିବା କୃଷକ",
+          "benefits": "କୃଷି ଆବଶ୍ୟକତା ପାଇଁ ସହଜ ଋଣ"
+        },
+        "organicFarming": {
+          "name": "ଜୈବିକ କୃଷି ପ୍ରୋତ୍ସାହନ",
+          "description": "ଜୈବିକ କୃଷି ପ୍ରକ୍ରିୟା ପାଇଁ ସହଯୋଗ",
+          "eligibility": "ଜୈବିକ ପ୍ରକ୍ରିୟା ଗ୍ରହଣ କରିବାକୁ ଇଚ୍ଛୁକ",
+          "benefits": "ଜୈବିକ ଇନ୍ପୁଟ୍ ଓ ସର୍ଟିଫିକେସନରେ ସହାୟତା"
+        }
+      },
+      "months": {
+        "jan": "ଜାନୁ",
+        "feb": "ଫେବ୍",
+        "mar": "ମାର୍",
+        "apr": "ଏପ୍ରି",
+        "may": "ମେ",
+        "jun": "ଜୁନ୍",
+        "jul": "ଜୁଲା",
+        "aug": "ଅଗ",
+        "sep": "ସେପ୍",
+        "oct": "ଅକ୍ଟୋ",
+        "nov": "ନଭେ",
+        "dec": "ଡିସେ"
+      },
+      "districts": {
+        "cuttack": "କଟକ",
+        "bhubaneswar": "ଭୁବନେଶ୍ୱର",
+        "puri": "ପୁରୀ",
+        "khordha": "ଖୋର୍ଦ୍ଧା",
+        "ganjam": "ଗଞ୍ଜାମ"
+      }
+    }
+  },
+  "common": {
+    "cancel": "ରଦ୍ଦ କରନ୍ତୁ"
+  },
+  "reports": {
+    "pageTitle": "ରିପୋର୍ଟ ଓ ବିଶ୍ଳେଷଣ",
+    "pageDescription": "ବିଶ୍ଳେଷଣାତ୍ମକ ରିପୋର୍ଟ ସୃଷ୍ଟି ଓ ପରିଚାଳନା",
+    "generateReport": "ରିପୋର୍ଟ ସୃଷ୍ଟି କରନ୍ତୁ",
+    "generateNewReport": "ନୂଆ ରିପୋର୍ଟ ସୃଷ୍ଟି କରନ୍ତୁ",
+    "generateReportDescription": "ନିର୍ଦ୍ଦିଷ୍ଟ ପ୍ୟାରାମିଟର୍ ସହ ଇଚ୍ଛାନୁସାର ରିପୋର୍ଟ",
+    "reportTitle": "ରିପୋର୍ଟ ଶୀର୍ଷକ",
+    "enterReportTitle": "ଶୀର୍ଷକ ଲେଖନ୍ତୁ",
+    "reportType": "ରିପୋର୍ଟ ପ୍ରକାର",
+    "selectReportType": "ପ୍ରକାର ବାଛନ୍ତୁ",
+    "dateRange": "ତାରିଖ ରେଞ୍ଜ",
+    "selectDate": "ତାରିଖ ବାଛନ୍ତୁ",
+    "fromDate": "ଆରମ୍ଭ ତାରିଖ",
+    "toDate": "ଶେଷ ତାରିଖ",
+    "generating": "ସୃଷ୍ଟି ହେଉଛି...",
+    "filterReports": "ରିପୋର୍ଟ ଫିଲ୍ଟର୍",
+    "filterByType": "ପ୍ରକାର ଅନୁଯାୟୀ",
+    "filterByStatus": "ସ୍ଥିତି ଅନୁଯାୟୀ",
+    "resetFilters": "ଫିଲ୍ଟର୍ ରିସେଟ୍",
+    "generated": "ସୃଷ୍ଟିତ",
+    "by": "ଦ୍ୱାରା",
+    "size": "ଆକାର",
+    "downloads": "ଡାଉନଲୋଡ୍",
+    "format": "ଫର୍ମାଟ୍",
+    "preview": "ପ୍ରିଭ୍ୟୁ",
+    "download": "ଡାଉନଲୋଡ୍",
+    "viewDetails": "ବିବରଣୀ",
+    "recommendation": "ପରାମର୍ଶ",
+    "impact2": "ପ୍ରଭାବ",
+    "tabs": {
+      "generatedReports": "ସୃଷ୍ଟିତ ରିପୋର୍ଟ",
+      "keyInsights": "ମୁଖ୍ୟ ଅନ୍ତର୍ଦୃଷ୍ଟି",
+      "reportAnalytics": "ରିପୋର୍ଟ ବିଶ୍ଳେଷଣ"
+    },
+    "filters": {
+      "allTypes": "ସମସ୍ତ ପ୍ରକାର",
+      "allStatus": "ସମସ୍ତ ସ୍ଥିତି"
+    },
+    "types": {
+      "registration": "ପଞ୍ଜୀକରଣ",
+      "analytics": "ବିଶ୍ଳେଷଣ",
+      "pestControl": "କୀଟ ନିୟନ୍ତ୍ରଣ",
+      "market": "ବଜାର",
+      "schemes": "ଯୋଜନା",
+      "registrationReport": "ପଞ୍ଜୀକରଣ ରିପୋର୍ଟ",
+      "analyticsReport": "ବିଶ୍ଳେଷଣ ରିପୋର୍ଟ",
+      "pestControlReport": "କୀଟ ନିୟନ୍ତ୍ରଣ ରିପୋର୍ଟ",
+      "marketAnalysis": "ବଜାର ବିଶ୍ଳେଷଣ",
+      "schemesReport": "ଯୋଜନା ରିପୋର୍ଟ"
+    },
+    "status": {
+      "completed": "ସମ୍ପୂର୍ଣ୍ଣ",
+      "processing": "ପ୍ରକ୍ରିୟାରତ",
+      "failed": "ବିଫଳ"
+    },
+    "impact": {
+      "high": "ଉଚ୍ଚ",
+      "medium": "ମଧ୍ୟମ",
+      "low": "ନିମ୍ନ"
+    },
+    "categories": {
+      "registration": "ପଞ୍ଜୀକରଣ",
+      "yield": "ଉତ୍ପାଦନ",
+      "pestControl": "କୀଟ ନିୟନ୍ତ୍ରଣ",
+      "market": "ବଜାର"
+    },
+    "generatedBy": {
+      "systemAdmin": "ସିଷ୍ଟମ୍ ଆଡ୍ମିନ୍",
+      "dataAnalyst": "ଡାଟା ଏନାଲିଷ୍ଟ୍",
+      "fieldOfficer": "କ୍ଷେତ୍ର ଅଧିକାରୀ",
+      "marketAnalyst": "ବଜାର ଏନାଲିଷ୍ଟ୍",
+      "programManager": "କାର୍ଯ୍ୟକ୍ରମ ପ୍ରବନ୍ଧକ"
+    },
+    "metrics": {
+      "totalReports": "ମୋଟ ରିପୋର୍ଟ",
+      "thisMonth": "ଏହି ମାସ +{{count}}",
+      "downloads": "ଡାଉନଲୋଡ୍",
+      "thisWeek": "ଏହି ସପ୍ତାହ +{{count}}",
+      "activeUsers": "ସକ୍ରିୟ ବ୍ୟବହାରକାରୀ",
+      "newUsers": "+{{count}} ନୂଆ ବ୍ୟବହାରକାରୀ",
+      "insightsGenerated": "ସୃଷ୍ଟିତ ଅନ୍ତର୍ଦୃଷ୍ଟି",
+      "newInsights": "+{{count}} ନୂଆ ଅନ୍ତର୍ଦୃଷ୍ଟି"
+    },
+    "months": {
+      "jan": "ଜାନୁ",
+      "feb": "ଫେବ୍",
+      "mar": "ମାର୍",
+      "apr": "ଏପ୍ରି",
+      "may": "ମେ",
+      "jun": "ଜୁନ୍",
+      "jul": "ଜୁଲା",
+      "aug": "ଅଗ",
+      "sep": "ସେପ୍",
+      "oct": "ଅକ୍ଟୋ",
+      "nov": "ନଭେ",
+      "dec": "ଡିସେ"
+    },
+    "chart": {
+      "title": "ରିପୋର୍ଟ ସୃଷ୍ଟି ଓ ଡାଉନଲୋଡ୍ ପ୍ରବଣତା",
+      "description": "ମାସିକ ରିପୋର୍ଟ ସୃଷ୍ଟି ଓ ଡାଉନଲୋଡ୍ ସଂଖ୍ୟାନୁପାତ",
+      "reportsGenerated": "ସୃଷ୍ଟିତ ରିପୋର୍ଟ",
+      "downloads": "ଡାଉନଲୋଡ୍"
+    },
+    "list": {
+      "monthlyFarmerRegistration": {
+        "title": "ମାସିକ କୃଷକ ପଞ୍ଜୀକରଣ ରିପୋର୍ଟ",
+        "description": "ସମସ୍ତ ଜିଲ୍ଲାରେ ନୂଆ ପଞ୍ଜୀକରଣର ସମ୍ପୂର୍ଣ୍ଣ ବିଶ୍ଳେଷଣ"
+      },
+      "cropYieldPerformance": {
+        "title": "ଫସଲ ଉତ୍ପାଦନ କାର୍ଯ୍ୟଦକ୍ଷତା",
+        "description": "ବର୍ତ୍ତମାନ ସୃତୁ ବନାମ ଇତିହାସିକ ତଥ୍ୟର ତୁଳନାତ୍ମକ ବିଶ୍ଳେଷଣ"
+      },
+      "pestOutbreakSummary": {
+        "title": "କୀଟ ପ୍ରକୋପ ସାରଂଶ",
+        "description": "ପ୍ରକୋପ ଓ ଗୃହୀତ ନିୟନ୍ତ୍ରଣ ପଦକ୍ଷେପର ସାରଂଶ"
+      },
+      "marketPriceTrends": {
+        "title": "ବଜାର ମୂଲ୍ୟ ପ୍ରବଣତା ବିଶ୍ଳେଷଣ",
+        "description": "ଫସଲ ମୂଲ୍ୟ ଉତ୍ତାପତାପ ଓ ବଜାର ପ୍ରବଣତା"
+      },
+      "schemeImplementation": {
+        "title": "ଯୋଜନା କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ପ୍ରଗତି",
+        "description": "ଯୋଜନା ରୂପାୟଣ ଓ ଲାଭାନ୍ୱିତ କଭରେଜ୍ ପ୍ରଗତି"
+      }
+    },
+    "insights": {
+      "farmerRegistrationSurge": {
+        "title": "କୃଷକ ପଞ୍ଜୀକରଣ ବୃଦ୍ଧି",
+        "description": "ଗତ ମାସ ତୁଳନାରେ 25% ବୃଦ୍ଧି",
+        "recommendation": "ଗତି ରଖିବାକୁ ଉଦ୍ୟମ ବଢାନ୍ତୁ"
+      },
+      "cropYieldImprovement": {
+        "title": "ଉତ୍ପାଦନ ସୁଧାର",
+        "description": "ମୁଖ୍ୟ ଫସଲରେ ସରାସରି 12% ବୃଦ୍ଧି",
+        "recommendation": "କମ୍ କାର୍ଯ୍ୟଦକ୍ଷ ଜିଲ୍ଲା ସହ ଶ୍ରେଷ୍ଠ ପ୍ରକ୍ରିୟା ଅଦଲ ବଦଲ କରନ୍ତୁ"
+      },
+      "pestControlEffectiveness": {
+        "title": "କୀଟ ନିୟନ୍ତ୍ରଣ କାର୍ଯ୍ୟକ୍ଷମତା",
+        "description": "ପଦକ୍ଷେପ ଫସଲ କ୍ଷତିକୁ 18% କମାଇଛି",
+        "recommendation": "ବର୍ତ୍ତମାନୀନ ଯୁକ୍ତି ଜାରି ରଖନ୍ତୁ"
+      },
+      "marketPriceVolatility": {
+        "title": "ବଜାର ମୂଲ୍ୟ ଅସ୍ଥିରତା",
+        "description": "ସାଧାରଣ ତୁଳନାରେ ଅଧିକ ଅସ୍ଥିରତା ଦେଖାଯାଇଛି",
+        "recommendation": "ମୂଲ୍ୟ ସ୍ଥିରତା ପଦକ୍ଷେପ ଗ୍ରହଣ କରନ୍ତୁ"
+      }
+    }
+  },
+  "month2": {
+    "Jan": "ଜାନୁଆରୀ",
+    "Feb": "ଫେବୃଆରୀ",
+    "Mar": "ମାର୍ଚ୍ଚ",
+    "Apr": "ଏପ୍ରିଲ",
+    "May": "ମେ",
+    "Jun": "ଜୁନ"
+  },
+  "common.save": "ସଞ୍ଚୟ"
 }

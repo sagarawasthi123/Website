@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { FARMERS_BY_ID } from "../data/farmers";
 import {
   Card,
   CardContent,
@@ -18,23 +19,29 @@ export default function FarmerDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // Mock farmer data
-  const farmer = {
-    id: id,
-    name: "Rajesh Kumar Patel",
-    district: "Cuttack",
-    village: "Banki",
-    phone: "+91 9876543210",
-    landSize: "2.5 acres",
-    crops: ["Rice", "Wheat"],
-    registrationDate: "2024-01-15",
-    status: "Active",
-    kccNumber: "KCC001234567",
-    address: "Banki, Cuttack",
-    aadharNumber: "1234-5678-9012",
-    bankAccount: "SBI Bank - 1234567890",
-  };
+  const [farmer, setFarmer] = useState(null);
+  useEffect(() => {
+    const data = FARMERS_BY_ID[id];
+    if (data) {
+      setFarmer({
+        id,
+        name: undefined, // we will resolve via i18n key
+        district: data.stateKey,
+        village: data.cityKey,
+        phone: data.phone || "",
+        landSize: "-",
+        crops: [],
+        registrationDate: "",
+        status: "Active",
+        kccNumber: "-",
+        address: `${data.citylabel}, ${data.state}`,
+        aadharNumber: "-",
+        bankAccount: "-",
+      });
+    } else {
+      setFarmer({ id });
+    }
+  }, [id]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -78,7 +85,7 @@ export default function FarmerDetailPage() {
                 {t("farmer.title")}
               </h1>
               <p className="text-sm text-muted-foreground">
-                {t("farmer.id")}: {farmer.id}
+                {t("farmer.id")}: {id}
               </p>
             </div>
           </div>
@@ -87,175 +94,190 @@ export default function FarmerDetailPage() {
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Farmer Profile Card */}
-          <Card className="animate-in fade-in-0 slide-in-from-top-4 duration-500">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-                    <User className="w-8 h-8 text-primary-foreground" />
+          {farmer === null ? (
+            <div className="flex justify-center items-center h-32">
+              <p className="text-muted-foreground">{t("common.loading")}</p>
+            </div>
+          ) : (
+            <Card className="animate-in fade-in-0 slide-in-from-top-4 duration-500">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
+                      <User className="w-8 h-8 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-2xl">
+                        {t(`farmers.names.${id}`)}
+                      </CardTitle>
+                      <CardDescription>
+                        {t("farmer.kcc")}: {farmer.kccNumber || "-"}
+                      </CardDescription>
+                    </div>
                   </div>
-                  <div>
-                    <CardTitle className="text-2xl">{t(`farmers.names.${farmer.id}`)}</CardTitle>
-                    <CardDescription>
-                      {t("farmer.kcc")}: {farmer.kccNumber}
-                    </CardDescription>
-                  </div>
+                  <Badge
+                    variant="outline"
+                    className={`text-sm ${getStatusColor(
+                      farmer.status || "Active"
+                    )}`}
+                  >
+                    {t(
+                      `status.${
+                        (farmer.status || "Active").toLowerCase?.() ||
+                        farmer.status
+                      }`
+                    )}
+                  </Badge>
                 </div>
-                <Badge
-                  variant="outline"
-                  className={`text-sm ${getStatusColor(farmer.status)}`}
-                >
-                  {t(
-                    `status.${farmer.status.toLowerCase?.() || farmer.status}`
-                  )}
-                </Badge>
-              </div>
-            </CardHeader>
+              </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm font-medium">
-                        {t("farmer.location")}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {t("farmer.address")}
-                      </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                      <div>
+                        <p className="text-sm font-medium">
+                          {t("farmer.location")}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {t("farmer.location")}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <Phone className="h-4 w-4 text-muted-foreground" />
+                      <div>
+                        <p className="text-sm font-medium">
+                          {t("farmer.contact")}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {farmer.phone || "-"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <div>
+                        <p className="text-sm font-medium">
+                          {t("farmer.registrationDate")}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                           29-08-2022
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
+                  <div className="space-y-4">
                     <div>
                       <p className="text-sm font-medium">
-                        {t("farmer.contact")}
+                        {t("farmer.landSize")}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {farmer.phone}
+                          100 acre
                       </p>
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <div>
+                      <p className="text-sm font-medium">{t("farmer.crops")}</p>
+                      <div className="flex flex-wrap gap-2 mt-1">
+                        {(farmer.crops || []).map((crop) => (
+                          <Badge key={crop} variant="outline" className="text-xs">
+                            {t(`farmers.crops.${crop.toLowerCase?.()}`)}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">{t("farmer.aadhar")}</p>
+                      <p className="text-sm text-muted-foreground">
+                         101345789087
+                      </p>
+                    </div>
                     <div>
                       <p className="text-sm font-medium">
-                        {t("farmer.registrationDate")}
+                        {t("farmer.bankAccount")}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {farmer.registrationDate}
+                            PNB1420041010050500013
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium">
-                      {t("farmer.landSize")}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {farmer.landSize}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{t("farmer.crops")}</p>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {farmer.crops.map((crop) => (
-                        <Badge key={crop} variant="outline" className="text-xs">
-                           {farmer.crops.map(crop => t(`farmers.crops.${crop.toLowerCase()}`)).join(", ")}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{t("farmer.aadhar")}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {farmer.aadharNumber}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">
-                      {t("farmer.bankAccount")}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {farmer.bankAccount}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Additional Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="animate-in fade-in-0 slide-in-from-left-4 duration-700 delay-200">
-              <CardHeader>
-                <CardTitle className="text-lg">
-                  {t("farmer.cropHistory")}
-                </CardTitle>
-                <CardDescription>{t("farmer.cropHistoryDesc")}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                    <div>
-                      <p className="font-medium">
-                        {t("farmer.sample.riceKharif")}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {t("farmer.sample.acres1_2")}
-                      </p>
+          {farmer !== null && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="animate-in fade-in-0 slide-in-from-left-4 duration-700 delay-200">
+                <CardHeader>
+                  <CardTitle className="text-lg">
+                    {t("farmer.cropHistory")}
+                  </CardTitle>
+                  <CardDescription>{t("farmer.cropHistoryDesc")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                      <div>
+                        <p className="font-medium">
+                          {t("farmer.sample.riceKharif")}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {t("farmer.sample.acres1_2")}
+                        </p>
+                      </div>
+                      <Badge variant="outline">{t("status.completed")}</Badge>
                     </div>
-                    <Badge variant="outline">{t("status.completed")}</Badge>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                    <div>
-                      <p className="font-medium">
-                        {t("farmer.sample.wheatRabi")}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {t("farmer.sample.acres1_3")}
-                      </p>
+                    <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                      <div>
+                        <p className="font-medium">
+                          {t("farmer.sample.wheatRabi")}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {t("farmer.sample.acres1_3")}
+                        </p>
+                      </div>
+                      <Badge variant="outline">{t("status.inProgress")}</Badge>
                     </div>
-                    <Badge variant="outline">{t("status.inProgress")}</Badge>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card className="animate-in fade-in-0 slide-in-from-right-4 duration-700 delay-300">
-              <CardHeader>
-                <CardTitle className="text-lg">
-                  {t("farmer.govtSchemes")}
-                </CardTitle>
-                <CardDescription>{t("farmer.govtSchemesDesc")}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                    <div>
-                      <p className="font-medium">PM-KISAN</p>
-                      <p className="text-sm text-muted-foreground">
-                        {t("farmer.sample.pmKisanAmount")}
-                      </p>
+              <Card className="animate-in fade-in-0 slide-in-from-right-4 duration-700 delay-300">
+                <CardHeader>
+                  <CardTitle className="text-lg">
+                    {t("farmer.govtSchemes")}
+                  </CardTitle>
+                  <CardDescription>{t("farmer.govtSchemesDesc")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                      <div>
+                        <p className="font-medium">PM-KISAN</p>
+                        <p className="text-sm text-muted-foreground">
+                          {t("farmer.sample.pmKisanAmount")}
+                        </p>
+                      </div>
+                      <Badge variant="outline">{t("status.active")}</Badge>
                     </div>
-                    <Badge variant="outline">{t("status.active")}</Badge>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                    <div>
-                      <p className="font-medium">
-                        {t("farmer.sample.soilHealthCard")}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {t("farmer.sample.validUntil2025")}
-                      </p>
+                    <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                      <div>
+                        <p className="font-medium">
+                          {t("farmer.sample.soilHealthCard")}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {t("farmer.sample.validUntil2025")}
+                        </p>
+                      </div>
+                      <Badge variant="outline">{t("status.active")}</Badge>
                     </div>
-                    <Badge variant="outline">{t("status.active")}</Badge>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </main>
       </div>
     </div>

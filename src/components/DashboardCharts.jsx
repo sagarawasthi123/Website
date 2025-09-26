@@ -58,9 +58,10 @@ const yieldTrend = [
   { monthKey: "Jun", yield: 78 },
 ];
 
-function getBarChartData(t) {
+function getBarChartData() {
+  const {t} = useTranslation();
   return {
-    labels: monthlyData.map((item) => t(`common.months.${item.monthKey}`)),
+    labels: monthlyData.map((item) => (t(`month2.${item.monthKey}`))),
     datasets: [
       {
         label: t("dashboard.datasets.farmers"),
@@ -82,7 +83,7 @@ function getBarChartData(t) {
 
 function getLineChartData(t) {
   return {
-    labels: yieldTrend.map((item) => t(`common.months.${item.monthKey}`)),
+    labels: yieldTrend.map((item) => (t(`month2.${item.monthKey}`))),
     datasets: [
       {
         label: t("dashboard.datasets.yieldPct"),

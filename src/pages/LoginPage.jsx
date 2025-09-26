@@ -39,6 +39,7 @@ export default function LoginPage() {
   const [captcha, setCaptcha] = useState("");
   const [language, setLanguage] = useState(i18n.resolvedLanguage || "en");
   const [isLoading, setIsLoading] = useState(false);
+  const [msg,setMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,13 +53,17 @@ export default function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
     // Simulate login process
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Redirect to dashboard
-    navigate("/dashboard");
+    if(username==='admin' && password==='123456' && captcha==='A7X9K'){
+      setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      navigate("/dashboard");
+    }
+    else{
+      setIsLoading(false);
+      setMsg("Login failed! Please try again.")
+    }
   };
 
   return (
@@ -170,6 +175,7 @@ export default function LoginPage() {
                   t("login.signIn")
                 )}
               </Button>
+              <div className="text-red-600 ml-1">{msg}</div>
             </form>
 
             <div className="mt-6 text-center">

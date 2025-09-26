@@ -23,16 +23,31 @@ import {
 } from "../components/ui/Tabs";
 import { Alert, AlertDescription, AlertTitle } from "../components/ui/Alert";
 import { Sidebar } from "../components/Sidebar";
-import { Bug, AlertTriangle, MapPin, Menu, Bell, Shield } from "lucide-react";
+import {
+  Bug,
+  AlertTriangle,
+  MapPin,
+  Menu,
+  Bell,
+  Shield,
+  Eye,
+} from "lucide-react";
 import CropHealthMap from "./CropHealthMap";
+import { useTranslation } from "react-i18next";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../components/ui/Dialog";
 
-
-const pestOutbreaks = [
+const getPestOutbreaks = (t) => [
   {
     id: 1,
-    pest: "Brown Plant Hopper",
-    crop: "Rice",
-    district: "Cuttack",
+    pest: t("pestTracking.data.pests.brownPlantHopper"),
+    crop: t("pestTracking.data.crops.rice"),
+    district: t("pestTracking.data.districts.cuttack"),
     severity: "High",
     affectedArea: "2,500 Ha",
     reportedDate: "2024-12-18",
@@ -41,9 +56,9 @@ const pestOutbreaks = [
   },
   {
     id: 2,
-    pest: "Stem Borer",
-    crop: "Rice",
-    district: "Puri",
+    pest: t("pestTracking.data.pests.stemBorer"),
+    crop: t("pestTracking.data.crops.rice"),
+    district: t("pestTracking.data.districts.puri"),
     severity: "Medium",
     affectedArea: "1,800 Ha",
     reportedDate: "2024-12-15",
@@ -52,9 +67,9 @@ const pestOutbreaks = [
   },
   {
     id: 3,
-    pest: "Aphids",
-    crop: "Wheat",
-    district: "Bhubaneswar",
+    pest: t("pestTracking.data.pests.aphids"),
+    crop: t("pestTracking.data.crops.wheat"),
+    district: t("pestTracking.data.districts.bhubaneswar"),
     severity: "Low",
     affectedArea: "900 Ha",
     reportedDate: "2024-12-12",
@@ -63,9 +78,9 @@ const pestOutbreaks = [
   },
   {
     id: 4,
-    pest: "Leaf Curl Virus",
-    crop: "Tomato",
-    district: "Khordha",
+    pest: t("pestTracking.data.pests.leafCurlVirus"),
+    crop: t("pestTracking.data.crops.tomato"),
+    district: t("pestTracking.data.districts.khordha"),
     severity: "High",
     affectedArea: "1,200 Ha",
     reportedDate: "2024-12-10",
@@ -74,77 +89,97 @@ const pestOutbreaks = [
   },
 ];
 
-const diseaseAlerts = [
+const getDiseaseAlerts = (t) => [
   {
     id: 1,
-    disease: "Blast Disease",
-    crop: "Rice",
-    symptoms: "Brown spots on leaves, neck rot",
-    prevention: "Use resistant varieties, proper drainage",
-    treatment: "Fungicide spray (Tricyclazole)",
+    disease: t("pestTracking.data.diseases.blastDisease"),
+    crop: t("pestTracking.data.crops.rice"),
+    symptoms: t("pestTracking.data.symptoms.blastDisease"),
+    prevention: t("pestTracking.data.prevention.blastDisease"),
+    treatment: t("pestTracking.data.treatment.blastDisease"),
     severity: "High",
   },
   {
     id: 2,
-    disease: "Powdery Mildew",
-    crop: "Wheat",
-    symptoms: "White powdery growth on leaves",
-    prevention: "Avoid overcrowding, proper ventilation",
-    treatment: "Sulfur-based fungicides",
+    disease: t("pestTracking.data.diseases.powderyMildew"),
+    crop: t("pestTracking.data.crops.wheat"),
+    symptoms: t("pestTracking.data.symptoms.powderyMildew"),
+    prevention: t("pestTracking.data.prevention.powderyMildew"),
+    treatment: t("pestTracking.data.treatment.powderyMildew"),
     severity: "Medium",
   },
   {
     id: 3,
-    disease: "Bacterial Wilt",
-    crop: "Tomato",
-    symptoms: "Wilting, yellowing of leaves",
-    prevention: "Crop rotation, soil sterilization",
-    treatment: "Copper-based bactericides",
+    disease: t("pestTracking.data.diseases.bacterialWilt"),
+    crop: t("pestTracking.data.crops.tomato"),
+    symptoms: t("pestTracking.data.symptoms.bacterialWilt"),
+    prevention: t("pestTracking.data.prevention.bacterialWilt"),
+    treatment: t("pestTracking.data.treatment.bacterialWilt"),
     severity: "High",
   },
 ];
 
-const weatherAdvisories = [
+const getWeatherAdvisories = (t) => [
   {
     id: 1,
-    title: "Heavy Rainfall Alert",
-    description:
-      "Expected heavy rainfall in coastal districts may increase fungal disease risk",
-    districts: ["Puri", "Balasore", "Bhadrak"],
+    title: t("pestTracking.data.weatherAdvisories.heavyRainfall.title"),
+    description: t(
+      "pestTracking.data.weatherAdvisories.heavyRainfall.description"
+    ),
+    districts: [
+      t("pestTracking.data.districts.puri"),
+      t("pestTracking.data.districts.balasore"),
+      t("pestTracking.data.districts.bhadrak"),
+    ],
     validUntil: "2024-12-25",
     priority: "High",
   },
   {
     id: 2,
-    title: "Temperature Rise Warning",
-    description: "Rising temperatures favorable for pest multiplication",
-    districts: ["Cuttack", "Khordha", "Nayagarh"],
+    title: t("pestTracking.data.weatherAdvisories.temperatureRise.title"),
+    description: t(
+      "pestTracking.data.weatherAdvisories.temperatureRise.description"
+    ),
+    districts: [
+      t("pestTracking.data.districts.cuttack"),
+      t("pestTracking.data.districts.khordha"),
+      t("pestTracking.data.districts.nayagarh"),
+    ],
     validUntil: "2024-12-30",
     priority: "Medium",
   },
 ];
 
-const treatmentRecommendations = [
+const getTreatmentRecommendations = (t) => [
   {
-    pest: "Brown Plant Hopper",
-    chemical: "Imidacloprid 17.8% SL",
-    dosage: "0.3 ml/L water",
-    application: "Foliar spray during evening hours",
-    frequency: "2-3 applications at 10-day intervals",
+    pest: t("pestTracking.data.pests.brownPlantHopper"),
+    chemical: t("pestTracking.data.treatments.brownPlantHopper.chemical"),
+    dosage: t("pestTracking.data.treatments.brownPlantHopper.dosage"),
+    application: t("pestTracking.data.treatments.brownPlantHopper.application"),
+    frequency: t("pestTracking.data.treatments.brownPlantHopper.frequency"),
   },
   {
-    pest: "Stem Borer",
-    chemical: "Chlorantraniliprole 18.5% SC",
-    dosage: "0.4 ml/L water",
-    application: "Spray on whorl and stem",
-    frequency: "Apply at early infestation stage",
+    pest: t("pestTracking.data.pests.stemBorer"),
+    chemical: t("pestTracking.data.treatments.stemBorer.chemical"),
+    dosage: t("pestTracking.data.treatments.stemBorer.dosage"),
+    application: t("pestTracking.data.treatments.stemBorer.application"),
+    frequency: t("pestTracking.data.treatments.stemBorer.frequency"),
   },
 ];
 
 export default function PestTrackingPage() {
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState("All Districts");
   const [selectedSeverity, setSelectedSeverity] = useState("All Severity");
+  const [viewingOutbreak, setViewingOutbreak] = useState(null);
+  const [showAlertDialog, setShowAlertDialog] = useState(false);
+  const [alertOutbreak, setAlertOutbreak] = useState(null);
+
+  const pestOutbreaks = getPestOutbreaks(t);
+  const diseaseAlerts = getDiseaseAlerts(t);
+  const weatherAdvisories = getWeatherAdvisories(t);
+  const treatmentRecommendations = getTreatmentRecommendations(t);
 
   const getSeverityColor = (severity) => {
     switch (severity) {
@@ -174,6 +209,51 @@ export default function PestTrackingPage() {
     }
   };
 
+  // Translate severity and status
+  const translateSeverity = (severity) => {
+    return t(`pestTracking.severity.${severity.toLowerCase()}`, {
+      defaultValue: severity,
+    });
+  };
+
+  const translateStatus = (status) => {
+    return t(`pestTracking.status.${status.toLowerCase()}`, {
+      defaultValue: status,
+    });
+  };
+
+  const filteredOutbreaks = getPestOutbreaks(t).filter((o) => {
+    const districtOk =
+      selectedDistrict === "All Districts" ||
+      o.district === selectedDistrict ||
+      // Some locales translate district labels; allow includes match
+      o.district?.toString() === selectedDistrict;
+    const severityOk =
+      selectedSeverity === "All Severity" || o.severity === selectedSeverity;
+    return districtOk && severityOk;
+  });
+
+  const handleResetFilters = () => {
+    setSelectedDistrict("All Districts");
+    setSelectedSeverity("All Severity");
+  };
+
+  const handleViewDetails = (outbreak) => {
+    setViewingOutbreak(outbreak);
+  };
+
+  const handleSendAlert = (outbreak) => {
+    setAlertOutbreak(outbreak);
+    setShowAlertDialog(true);
+  };
+
+  const confirmSendAlert = () => {
+    // Simulate sending alert
+    console.log("Sending alert for outbreak:", alertOutbreak);
+    setShowAlertDialog(false);
+    setAlertOutbreak(null);
+  };
+
   return (
     <div className="layout-container bg-background">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -192,17 +272,19 @@ export default function PestTrackingPage() {
             </Button>
             <div>
               <h1 className="text-xl font-semibold text-foreground">
-                Pest & Disease Tracking
+                {t("pestTracking.header.title")}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Monitor and manage crop health threats
+                {t("pestTracking.header.subtitle")}
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
             <Badge variant="destructive" className="animate-pulse">
-              {pestOutbreaks.filter((p) => p.status === "Active").length} Active
-              Outbreaks
+              {t("pestTracking.header.activeOutbreaks", {
+                count: pestOutbreaks.filter((p) => p.status === "Active")
+                  .length,
+              })}
             </Badge>
           </div>
         </header>
@@ -212,10 +294,11 @@ export default function PestTrackingPage() {
           {/* Alert Banner */}
           <Alert className="animate-in fade-in-0 slide-in-from-top-4 duration-500 border-red-200 bg-red-50">
             <AlertTriangle className="h-4 w-4 text-red-600" />
-            <AlertTitle className="text-red-800">Critical Alert</AlertTitle>
+            <AlertTitle className="text-red-800">
+              {t("pestTracking.alerts.critical")}
+            </AlertTitle>
             <AlertDescription className="text-red-700">
-              Brown Plant Hopper outbreak detected in Cuttack district affecting
-              2,500 Ha. Immediate action required.
+              {t("pestTracking.alerts.description")}
             </AlertDescription>
           </Alert>
 
@@ -223,30 +306,30 @@ export default function PestTrackingPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
-                title: "Active Outbreaks",
+                title: t("pestTracking.metrics.activeOutbreaks"),
                 value: "4",
-                change: "+2 this week",
+                change: t("pestTracking.metrics.change.activeOutbreaks"),
                 icon: Bug,
                 color: "text-red-500",
               },
               {
-                title: "Affected Area",
+                title: t("pestTracking.metrics.affectedArea"),
                 value: "6.4K Ha",
-                change: "+15% from last month",
+                change: t("pestTracking.metrics.change.affectedArea"),
                 icon: MapPin,
                 color: "text-orange-500",
               },
               {
-                title: "Farmers Impacted",
+                title: t("pestTracking.metrics.farmersImpacted"),
                 value: "1,230",
-                change: "+8% this week",
+                change: t("pestTracking.metrics.change.farmersImpacted"),
                 icon: AlertTriangle,
                 color: "text-yellow-500",
               },
               {
-                title: "Control Rate",
+                title: t("pestTracking.metrics.controlRate"),
                 value: "78%",
-                change: "+12% improvement",
+                change: t("pestTracking.metrics.change.controlRate"),
                 icon: Shield,
                 color: "text-green-500",
               },
@@ -279,7 +362,7 @@ export default function PestTrackingPage() {
           {/* Filters */}
           <Card className="animate-in fade-in-0 slide-in-from-top-4 duration-700 delay-200">
             <CardHeader>
-              <CardTitle>Filter Outbreaks</CardTitle>
+              <CardTitle>{t("pestTracking.filters.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -288,10 +371,14 @@ export default function PestTrackingPage() {
                   onValueChange={setSelectedDistrict}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select District" />
+                    <SelectValue
+                      placeholder={t("pestTracking.filters.district")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="All Districts">All Districts</SelectItem>
+                    <SelectItem value="All Districts">
+                      {t("pestTracking.filters.allDistricts")}
+                    </SelectItem>
                     <SelectItem value="Cuttack">Cuttack</SelectItem>
                     <SelectItem value="Puri">Puri</SelectItem>
                     <SelectItem value="Bhubaneswar">Bhubaneswar</SelectItem>
@@ -303,17 +390,29 @@ export default function PestTrackingPage() {
                   onValueChange={setSelectedSeverity}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Severity" />
+                    <SelectValue
+                      placeholder={t("pestTracking.filters.severity")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="All Severity">All Severity</SelectItem>
-                    <SelectItem value="High">High</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="Low">Low</SelectItem>
+                    <SelectItem value="All Severity">
+                      {t("pestTracking.filters.allSeverity")}
+                    </SelectItem>
+                    <SelectItem value="High">
+                      {t("pestTracking.severity.high")}
+                    </SelectItem>
+                    <SelectItem value="Medium">
+                      {t("pestTracking.severity.medium")}
+                    </SelectItem>
+                    <SelectItem value="Low">
+                      {t("pestTracking.severity.low")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
-                <Button variant="outline">Reset Filters</Button>
+                <Button variant="outline" onClick={handleResetFilters}>
+                  {t("pestTracking.filters.reset")}
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -324,14 +423,22 @@ export default function PestTrackingPage() {
             className="animate-in fade-in-0 slide-in-from-bottom-4 duration-700 delay-300"
           >
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="weather">Pest HeatMap</TabsTrigger>
-              <TabsTrigger value="outbreaks">Active Outbreaks</TabsTrigger>
-              <TabsTrigger value="diseases">Disease Alerts</TabsTrigger>
-              <TabsTrigger value="treatment">Treatment Guide</TabsTrigger>
+              <TabsTrigger value="weather">
+                {t("pestTracking.tabs.heatmap")}
+              </TabsTrigger>
+              <TabsTrigger value="outbreaks">
+                {t("pestTracking.tabs.outbreaks")}
+              </TabsTrigger>
+              <TabsTrigger value="diseases">
+                {t("pestTracking.tabs.diseases")}
+              </TabsTrigger>
+              <TabsTrigger value="treatment">
+                {t("pestTracking.tabs.treatment")}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="outbreaks" className="space-y-4">
-              {pestOutbreaks.map((outbreak, index) => (
+              {filteredOutbreaks.map((outbreak, index) => (
                 <Card
                   key={outbreak.id}
                   className="animate-in fade-in-0 slide-in-from-left-2 hover:shadow-md transition-all duration-200"
@@ -348,41 +455,57 @@ export default function PestTrackingPage() {
                             variant="outline"
                             className={getSeverityColor(outbreak.severity)}
                           >
-                            {outbreak.severity}
+                            {translateSeverity(outbreak.severity)}
                           </Badge>
                           <Badge
                             variant="outline"
                             className={getStatusColor(outbreak.status)}
                           >
-                            {outbreak.status}
+                            {translateStatus(outbreak.status)}
                           </Badge>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground">
                           <div>
-                            <p className="font-medium">Crop</p>
+                            <p className="font-medium">
+                              {t("pestTracking.outbreaks.crop")}
+                            </p>
                             <p>{outbreak.crop}</p>
                           </div>
                           <div>
-                            <p className="font-medium">District</p>
+                            <p className="font-medium">
+                              {t("pestTracking.outbreaks.district")}
+                            </p>
                             <p>{outbreak.district}</p>
                           </div>
                           <div>
-                            <p className="font-medium">Affected Area</p>
+                            <p className="font-medium">
+                              {t("pestTracking.outbreaks.area")}
+                            </p>
                             <p>{outbreak.affectedArea}</p>
                           </div>
                           <div>
-                            <p className="font-medium">Farmers</p>
+                            <p className="font-medium">
+                              {t("pestTracking.outbreaks.farmers")}
+                            </p>
                             <p>{outbreak.farmers}</p>
                           </div>
                         </div>
                       </div>
                       <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          View Details
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleViewDetails(outbreak)}
+                        >
+                          <Eye className="h-4 w-4 mr-2" />
+                          {t("pestTracking.outbreaks.view")}
                         </Button>
-                        <Button size="sm">
+                        <Button
+                          size="sm"
+                          onClick={() => handleSendAlert(outbreak)}
+                        >
                           <Bell className="h-4 w-4 mr-2" />
-                          Send Alert
+                          {t("pestTracking.outbreaks.alert")}
                         </Button>
                       </div>
                     </div>
@@ -407,30 +530,34 @@ export default function PestTrackingPage() {
                         variant="outline"
                         className={getSeverityColor(disease.severity)}
                       >
-                        {disease.severity} Risk
+                        {t("pestTracking.disease.risk", {
+                          severity: translateSeverity(disease.severity),
+                        })}
                       </Badge>
                     </div>
                     <CardDescription>
-                      Affecting {disease.crop} crops
+                      {t("pestTracking.disease.affecting", {
+                        crop: disease.crop,
+                      })}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                          Symptoms
+                          {t("pestTracking.disease.symptoms")}
                         </h4>
                         <p className="text-sm">{disease.symptoms}</p>
                       </div>
                       <div>
                         <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                          Prevention
+                          {t("pestTracking.disease.prevention")}
                         </h4>
                         <p className="text-sm">{disease.prevention}</p>
                       </div>
                       <div>
                         <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                          Treatment
+                          {t("pestTracking.disease.treatment")}
                         </h4>
                         <p className="text-sm">{disease.treatment}</p>
                       </div>
@@ -442,8 +569,10 @@ export default function PestTrackingPage() {
 
             <TabsContent value="weather" className="space-y-4">
               <div className="card">
-              <h2 className="text-xl font-semibold mb-4">Crop Health Heatmap</h2>
-              <CropHealthMap />
+                <h2 className="text-xl font-semibold mb-4">
+                  {t("pestTracking.heatmap.title")}
+                </h2>
+                <CropHealthMap />
               </div>
             </TabsContent>
 
@@ -456,7 +585,9 @@ export default function PestTrackingPage() {
                 >
                   <CardHeader>
                     <CardTitle className="text-lg">
-                      {treatment.pest} Treatment
+                      {t("pestTracking.treatment.header", {
+                        pest: treatment.pest,
+                      })}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -464,7 +595,7 @@ export default function PestTrackingPage() {
                       <div className="space-y-3">
                         <div>
                           <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                            Recommended Chemical
+                            {t("pestTracking.treatment.chemical")}
                           </h4>
                           <p className="text-sm font-medium">
                             {treatment.chemical}
@@ -472,7 +603,7 @@ export default function PestTrackingPage() {
                         </div>
                         <div>
                           <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                            Dosage
+                            {t("pestTracking.treatment.dosage")}
                           </h4>
                           <p className="text-sm">{treatment.dosage}</p>
                         </div>
@@ -480,13 +611,13 @@ export default function PestTrackingPage() {
                       <div className="space-y-3">
                         <div>
                           <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                            Application Method
+                            {t("pestTracking.treatment.application")}
                           </h4>
                           <p className="text-sm">{treatment.application}</p>
                         </div>
                         <div>
                           <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                            Frequency
+                            {t("pestTracking.treatment.frequency")}
                           </h4>
                           <p className="text-sm">{treatment.frequency}</p>
                         </div>
@@ -499,6 +630,145 @@ export default function PestTrackingPage() {
           </Tabs>
         </main>
       </div>
+
+      {/* View Details Dialog */}
+      <Dialog
+        open={!!viewingOutbreak}
+        onOpenChange={(open) => !open && setViewingOutbreak(null)}
+      >
+        <DialogContent className="max-w-2xl animate-in fade-in-0 zoom-in-95 duration-200">
+          <DialogHeader>
+            <DialogTitle>{viewingOutbreak?.pest}</DialogTitle>
+            <DialogDescription>
+              {t("pestTracking.details.description")}
+            </DialogDescription>
+          </DialogHeader>
+          {viewingOutbreak && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                    {t("pestTracking.outbreaks.crop")}
+                  </h4>
+                  <p className="text-sm">{viewingOutbreak.crop}</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                    {t("pestTracking.outbreaks.district")}
+                  </h4>
+                  <p className="text-sm">{viewingOutbreak.district}</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                    {t("pestTracking.outbreaks.area")}
+                  </h4>
+                  <p className="text-sm">{viewingOutbreak.affectedArea}</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                    {t("pestTracking.outbreaks.farmers")}
+                  </h4>
+                  <p className="text-sm">{viewingOutbreak.farmers}</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                    {t("pestTracking.details.severity")}
+                  </h4>
+                  <Badge
+                    variant="outline"
+                    className={getSeverityColor(viewingOutbreak.severity)}
+                  >
+                    {translateSeverity(viewingOutbreak.severity)}
+                  </Badge>
+                </div>
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                    {t("pestTracking.details.status")}
+                  </h4>
+                  <Badge
+                    variant="outline"
+                    className={getStatusColor(viewingOutbreak.status)}
+                  >
+                    {translateStatus(viewingOutbreak.status)}
+                  </Badge>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                  {t("pestTracking.details.reportedDate")}
+                </h4>
+                <p className="text-sm">{viewingOutbreak.reportedDate}</p>
+              </div>
+              <div className="flex space-x-2 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setViewingOutbreak(null)}
+                >
+                  {t("common.close")}
+                </Button>
+                <Button
+                  onClick={() => {
+                    setViewingOutbreak(null);
+                    handleSendAlert(viewingOutbreak);
+                  }}
+                >
+                  <Bell className="h-4 w-4 mr-2" />
+                  {t("pestTracking.outbreaks.alert")}
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Send Alert Dialog */}
+      <Dialog open={showAlertDialog} onOpenChange={setShowAlertDialog}>
+        <DialogContent className="max-w-md animate-in fade-in-0 zoom-in-95 duration-200">
+          <DialogHeader>
+            <DialogTitle>Pest Alert</DialogTitle>
+            <DialogDescription>
+                Stay informed about current pest infestations affecting crops.
+            </DialogDescription>
+          </DialogHeader>
+          {alertOutbreak && (
+            <div className="space-y-4">
+              <div className="bg-muted p-3 rounded-lg">
+                <h4 className="font-medium text-sm mb-2">
+                      Details of current pest outbreaks.
+                </h4>
+                <p className="text-sm">
+                  <strong>Outbreak Pest:</strong>{" "}
+                  {alertOutbreak.pest}
+                </p>
+                <p className="text-sm">
+                  <strong>{t("pestTracking.outbreaks.crop")}:</strong>{" "}
+                  {alertOutbreak.crop}
+                </p>
+                <p className="text-sm">
+                  <strong>{t("pestTracking.outbreaks.district")}:</strong>{" "}
+                  {alertOutbreak.district}
+                </p>
+                <p className="text-sm">
+                  <strong>{t("pestTracking.outbreaks.area")}:</strong>{" "}
+                  {alertOutbreak.affectedArea}
+                </p>
+              </div>
+              <div className="flex space-x-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowAlertDialog(false)}
+                >
+                  {t("common.cancel")}
+                </Button>
+                <Button onClick={confirmSendAlert}>
+                  <Bell className="h-4 w-4 mr-2" />
+                      Send
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

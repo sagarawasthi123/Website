@@ -43,6 +43,7 @@ import {
   Menu,
   RefreshCw,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(
   CategoryScale,
@@ -55,110 +56,167 @@ ChartJS.register(
   Legend
 );
 
-const currentPrices = [
-  {
-    crop: "Rice (Common)",
-    currentPrice: 2850,
-    previousPrice: 2720,
-    change: 4.8,
-    unit: "per quintal",
-    market: "Bhubaneswar",
-    lastUpdated: "2 hours ago",
-  },
-  {
-    crop: "Rice (Basmati)",
-    currentPrice: 4200,
-    previousPrice: 4150,
-    change: 1.2,
-    unit: "per quintal",
-    market: "Cuttack",
-    lastUpdated: "1 hour ago",
-  },
-  {
-    crop: "Wheat",
-    currentPrice: 2350,
-    previousPrice: 2400,
-    change: -2.1,
-    unit: "per quintal",
-    market: "Puri",
-    lastUpdated: "3 hours ago",
-  },
-  {
-    crop: "Sugarcane",
-    currentPrice: 380,
-    previousPrice: 375,
-    change: 1.3,
-    unit: "per quintal",
-    market: "Khordha",
-    lastUpdated: "4 hours ago",
-  },
-  {
-    crop: "Onion",
-    currentPrice: 3200,
-    previousPrice: 2950,
-    change: 8.5,
-    unit: "per quintal",
-    market: "Balasore",
-    lastUpdated: "1 hour ago",
-  },
-  {
-    crop: "Potato",
-    currentPrice: 1850,
-    previousPrice: 1920,
-    change: -3.6,
-    unit: "per quintal",
-    market: "Ganjam",
-    lastUpdated: "2 hours ago",
-  },
-];
-
-const priceHistory = [
-  { date: "Dec 1", rice: 2650, wheat: 2300, onion: 2800, potato: 1750 },
-  { date: "Dec 5", rice: 2680, wheat: 2320, onion: 2900, potato: 1780 },
-  { date: "Dec 10", rice: 2720, wheat: 2350, onion: 3100, potato: 1850 },
-  { date: "Dec 15", rice: 2780, wheat: 2380, onion: 3000, potato: 1900 },
-  { date: "Dec 20", rice: 2850, wheat: 2350, onion: 3200, potato: 1850 },
-];
-
-const marketComparison = [
-  { market: "Bhubaneswar", rice: 2850, wheat: 2350, onion: 3200 },
-  { market: "Cuttack", rice: 2820, wheat: 2380, onion: 3150 },
-  { market: "Puri", rice: 2780, wheat: 2350, onion: 3100 },
-  { market: "Khordha", rice: 2900, wheat: 2400, onion: 3300 },
-  { market: "Balasore", rice: 2750, wheat: 2320, onion: 3200 },
-];
-
-const priceAlerts = [
-  {
-    id: 1,
-    crop: "Onion",
-    message: "Price increased by 8.5% in last 24 hours",
-    type: "increase",
-    threshold: "5%",
-    market: "Balasore",
-  },
-  {
-    id: 2,
-    crop: "Rice (Common)",
-    message: "Price reached monthly high of ₹2,850/quintal",
-    type: "high",
-    threshold: "₹2,800",
-    market: "Bhubaneswar",
-  },
-  {
-    id: 3,
-    crop: "Potato",
-    message: "Price dropped below support level",
-    type: "decrease",
-    threshold: "₹1,900",
-    market: "Ganjam",
-  },
-];
-
 export default function MarketPricesPage() {
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [selectedMarket, setSelectedMarket] = useState("All Markets");
-  const [selectedCrop, setSelectedCrop] = useState("All Crops");
+  const [selectedMarket, setSelectedMarket] = useState(
+    t("marketPage.filters.allMarkets")
+  );
+  const [selectedCrop, setSelectedCrop] = useState(
+    t("marketPage.filters.allCrops")
+  );
+
+  const currentPrices = [
+    {
+      crop: t("marketPage.crops.riceCommon"),
+      currentPrice: 2850,
+      previousPrice: 2720,
+      change: 4.8,
+      unit: t("marketPage.units.perQuintal"),
+      market: t("marketPage.districts.bhubaneswar"),
+      lastUpdated: t("marketPage.updated.2h"),
+    },
+    {
+      crop: t("marketPage.crops.riceBasmati"),
+      currentPrice: 4200,
+      previousPrice: 4150,
+      change: 1.2,
+      unit: t("marketPage.units.perQuintal"),
+      market: t("marketPage.districts.cuttack"),
+      lastUpdated: t("marketPage.updated.1h"),
+    },
+    {
+      crop: t("marketPage.crops.wheat"),
+      currentPrice: 2350,
+      previousPrice: 2400,
+      change: -2.1,
+      unit: t("marketPage.units.perQuintal"),
+      market: t("marketPage.districts.puri"),
+      lastUpdated: t("marketPage.updated.3h"),
+    },
+    {
+      crop: t("marketPage.crops.sugarcane"),
+      currentPrice: 380,
+      previousPrice: 375,
+      change: 1.3,
+      unit: t("marketPage.units.perQuintal"),
+      market: t("marketPage.districts.khordha"),
+      lastUpdated: t("marketPage.updated.4h"),
+    },
+    {
+      crop: t("marketPage.crops.onion"),
+      currentPrice: 3200,
+      previousPrice: 2950,
+      change: 8.5,
+      unit: t("marketPage.units.perQuintal"),
+      market: t("marketPage.districts.balasore"),
+      lastUpdated: t("marketPage.updated.1h"),
+    },
+    {
+      crop: t("marketPage.crops.potato"),
+      currentPrice: 1850,
+      previousPrice: 1920,
+      change: -3.6,
+      unit: t("marketPage.units.perQuintal"),
+      market: t("marketPage.districts.ganjam"),
+      lastUpdated: t("marketPage.updated.2h"),
+    },
+  ];
+
+  const priceHistory = [
+    { date: "Dec 1", rice: 2650, wheat: 2300, onion: 2800, potato: 1750 },
+    { date: "Dec 5", rice: 2680, wheat: 2320, onion: 2900, potato: 1780 },
+    { date: "Dec 10", rice: 2720, wheat: 2350, onion: 3100, potato: 1850 },
+    { date: "Dec 15", rice: 2780, wheat: 2380, onion: 3000, potato: 1900 },
+    { date: "Dec 20", rice: 2850, wheat: 2350, onion: 3200, potato: 1850 },
+  ];
+
+  const marketComparison = [
+    {
+      market: t("marketPage.districts.bhubaneswar"),
+      rice: 2850,
+      wheat: 2350,
+      onion: 3200,
+    },
+    {
+      market: t("marketPage.districts.cuttack"),
+      rice: 2820,
+      wheat: 2380,
+      onion: 3150,
+    },
+    {
+      market: t("marketPage.districts.puri"),
+      rice: 2780,
+      wheat: 2350,
+      onion: 3100,
+    },
+    {
+      market: t("marketPage.districts.khordha"),
+      rice: 2900,
+      wheat: 2400,
+      onion: 3300,
+    },
+    {
+      market: t("marketPage.districts.balasore"),
+      rice: 2750,
+      wheat: 2320,
+      onion: 3200,
+    },
+  ];
+
+  const priceAlerts = [
+    {
+      id: 1,
+      crop: t("marketPage.crops.onion"),
+      message: t("marketPage.alerts.onion"),
+      type: "increase",
+      threshold: "5%",
+      market: t("marketPage.districts.balasore"),
+    },
+    {
+      id: 2,
+      crop: t("marketPage.crops.riceCommon"),
+      message: t("marketPage.alerts.riceCommon"),
+      type: "high",
+      threshold: "₹2,800",
+      market: t("marketPage.districts.bhubaneswar"),
+    },
+    {
+      id: 3,
+      crop: t("marketPage.crops.potato"),
+      message: t("marketPage.alerts.potato"),
+      type: "decrease",
+      threshold: "₹1,900",
+      market: t("marketPage.districts.ganjam"),
+    },
+  ];
+
+  const metrics = [
+    {
+      title: t("marketPage.metrics.averagePriceIndex"),
+      value: "₹2,640",
+      change: "+3.2%",
+      icon: IndianRupee,
+    },
+    {
+      title: t("marketPage.metrics.priceVolatility"),
+      value: "12.5%",
+      change: "-2.1%",
+      icon: TrendingUp,
+    },
+    {
+      title: t("marketPage.metrics.activeMarkets"),
+      value: "28",
+      change: "+2 new",
+      icon: MapPin,
+    },
+    {
+      title: t("marketPage.metrics.dailyUpdates"),
+      value: "156",
+      change: "+12 today",
+      icon: RefreshCw,
+    },
+  ];
 
   const getPriceChangeColor = (change) => {
     if (change > 0) return "text-green-600";
@@ -190,31 +248,31 @@ export default function MarketPricesPage() {
     labels: priceHistory.map((item) => item.date),
     datasets: [
       {
-        label: "Rice (₹/quintal)",
+        label: t("marketPage.charts.rice"),
         data: priceHistory.map((item) => item.rice),
-        borderColor: "#2E7D32", // Primary color
-        backgroundColor: "#2E7D32", // Primary color
+        borderColor: "#2E7D32",
+        backgroundColor: "#2E7D32",
         tension: 0.4,
       },
       {
-        label: "Wheat (₹/quintal)",
+        label: t("marketPage.charts.wheat"),
         data: priceHistory.map((item) => item.wheat),
-        borderColor: "#66BB6A", // Secondary color
-        backgroundColor: "#66BB6A", // Secondary color
+        borderColor: "#66BB6A",
+        backgroundColor: "#66BB6A",
         tension: 0.4,
       },
       {
-        label: "Onion (₹/quintal)",
+        label: t("marketPage.charts.onion"),
         data: priceHistory.map((item) => item.onion),
-        borderColor: "#004080", // Accent color
-        backgroundColor: "#004080", // Accent color
+        borderColor: "#004080",
+        backgroundColor: "#004080",
         tension: 0.4,
       },
       {
-        label: "Potato (₹/quintal)",
+        label: t("marketPage.charts.potato"),
         data: priceHistory.map((item) => item.potato),
-        borderColor: "#DAA520", // Highlight color
-        backgroundColor: "#DAA520", // Highlight color
+        borderColor: "#DAA520",
+        backgroundColor: "#DAA520",
         tension: 0.4,
       },
     ],
@@ -224,19 +282,19 @@ export default function MarketPricesPage() {
     labels: marketComparison.map((item) => item.market),
     datasets: [
       {
-        label: "Rice (₹/quintal)",
+        label: t("marketPage.charts.rice"),
         data: marketComparison.map((item) => item.rice),
-        backgroundColor: "#2E7D32", // Primary color
+        backgroundColor: "#2E7D32",
       },
       {
-        label: "Wheat (₹/quintal)",
+        label: t("marketPage.charts.wheat"),
         data: marketComparison.map((item) => item.wheat),
-        backgroundColor: "#66BB6A", // Secondary color
+        backgroundColor: "#66BB6A",
       },
       {
-        label: "Onion (₹/quintal)",
+        label: t("marketPage.charts.onion"),
         data: marketComparison.map((item) => item.onion),
-        backgroundColor: "#DAA520", // Accent color
+        backgroundColor: "#DAA520",
       },
     ],
   };
@@ -248,47 +306,47 @@ export default function MarketPricesPage() {
       legend: {
         position: "top",
         labels: {
-          color: "#212121", // Text primary
+          color: "#212121",
           font: {
-            family: "'Inter', sans-serif"
-          }
-        }
+            family: "'Inter', sans-serif",
+          },
+        },
       },
       tooltip: {
-        backgroundColor: "#FFFFFF", // Surface color
-        titleColor: "#212121", // Text primary
-        bodyColor: "#212121", // Text primary
-        borderColor: "#E0E0E0", // Border color
+        backgroundColor: "#FFFFFF",
+        titleColor: "#212121",
+        bodyColor: "#212121",
+        borderColor: "#E0E0E0",
         borderWidth: 1,
         padding: 10,
         boxWidth: 10,
         boxHeight: 10,
-        usePointStyle: true
-      }
+        usePointStyle: true,
+      },
     },
     scales: {
       y: {
         beginAtZero: true,
         grid: {
-          color: "#E0E0E0", // Border color
+          color: "#E0E0E0",
         },
         ticks: {
-          color: "#4E4E4E", // Text secondary
+          color: "#4E4E4E",
         },
       },
       x: {
         grid: {
-          color: "#E0E0E0", // Border color
+          color: "#E0E0E0",
         },
         ticks: {
-          color: "#4E4E4E", // Text secondary
+          color: "#4E4E4E",
         },
       },
     },
     animation: {
       duration: 1000,
-      easing: 'easeOutQuart'
-    }
+      easing: "easeOutQuart",
+    },
   };
 
   return (
@@ -309,17 +367,17 @@ export default function MarketPricesPage() {
             </Button>
             <div>
               <h1 className="text-xl font-semibold text-foreground">
-                Market Prices
+                {t("marketPage.header.title")}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Real-time crop price monitoring and analysis
+                {t("marketPage.header.subtitle")}
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
             <Button variant="outline" size="sm">
               <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh Prices
+              {t("marketPage.header.refresh")}
             </Button>
           </div>
         </header>
@@ -328,32 +386,7 @@ export default function MarketPricesPage() {
         <main className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              {
-                title: "Average Price Index",
-                value: "₹2,640",
-                change: "+3.2%",
-                icon: IndianRupee,
-              },
-              {
-                title: "Price Volatility",
-                value: "12.5%",
-                change: "-2.1%",
-                icon: TrendingUp,
-              },
-              {
-                title: "Active Markets",
-                value: "28",
-                change: "+2 new",
-                icon: MapPin,
-              },
-              {
-                title: "Daily Updates",
-                value: "156",
-                change: "+12 today",
-                icon: RefreshCw,
-              },
-            ].map((metric, index) => (
+            {metrics.map((metric, index) => (
               <Card
                 key={metric.title}
                 className="animate-in fade-in-0 slide-in-from-bottom-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
@@ -382,10 +415,10 @@ export default function MarketPricesPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                <span>Price Alerts</span>
+                <span>{t("marketPage.alerts2.title")}</span>
               </CardTitle>
               <CardDescription>
-                Recent significant price movements
+                {t("marketPage.alerts2.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -424,7 +457,7 @@ export default function MarketPricesPage() {
           {/* Filters */}
           <Card className="animate-in fade-in-0 slide-in-from-top-4 duration-700 delay-200">
             <CardHeader>
-              <CardTitle>Filter Prices</CardTitle>
+              <CardTitle>{t("marketPage.filters.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -433,29 +466,51 @@ export default function MarketPricesPage() {
                   onValueChange={setSelectedMarket}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Market" />
+                    <SelectValue
+                      placeholder={t("marketPage.filters.selectMarket")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="All Markets">All Markets</SelectItem>
-                    <SelectItem value="Bhubaneswar">Bhubaneswar</SelectItem>
-                    <SelectItem value="Cuttack">Cuttack</SelectItem>
-                    <SelectItem value="Puri">Puri</SelectItem>
+                    <SelectItem value={t("marketPage.filters.allMarkets")}>
+                      {t("marketPage.filters.allMarkets")}
+                    </SelectItem>
+                    <SelectItem value={t("marketPage.districts.bhubaneswar")}>
+                      {t("marketPage.districts.bhubaneswar")}
+                    </SelectItem>
+                    <SelectItem value={t("marketPage.districts.cuttack")}>
+                      {t("marketPage.districts.cuttack")}
+                    </SelectItem>
+                    <SelectItem value={t("marketPage.districts.puri")}>
+                      {t("marketPage.districts.puri")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
                 <Select value={selectedCrop} onValueChange={setSelectedCrop}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Crop" />
+                    <SelectValue
+                      placeholder={t("marketPage.filters.selectCrop")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="All Crops">All Crops</SelectItem>
-                    <SelectItem value="Rice">Rice</SelectItem>
-                    <SelectItem value="Wheat">Wheat</SelectItem>
-                    <SelectItem value="Vegetables">Vegetables</SelectItem>
+                    <SelectItem value={t("marketPage.filters.allCrops")}>
+                      {t("marketPage.filters.allCrops")}
+                    </SelectItem>
+                    <SelectItem value={t("marketPage.filters.rice")}>
+                      {t("marketPage.filters.rice")}
+                    </SelectItem>
+                    <SelectItem value={t("marketPage.filters.wheat")}>
+                      {t("marketPage.filters.wheat")}
+                    </SelectItem>
+                    <SelectItem value={t("marketPage.filters.vegetables")}>
+                      {t("marketPage.filters.vegetables")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
-                <Button variant="outline">Reset Filters</Button>
+                <Button variant="outline">
+                  {t("marketPage.filters.reset")}
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -466,9 +521,15 @@ export default function MarketPricesPage() {
             className="animate-in fade-in-0 slide-in-from-bottom-4 duration-700 delay-300"
           >
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="current">Current Prices</TabsTrigger>
-              <TabsTrigger value="trends">Price Trends</TabsTrigger>
-              <TabsTrigger value="comparison">Market Comparison</TabsTrigger>
+              <TabsTrigger value="current">
+                {t("marketPage.tabs.current")}
+              </TabsTrigger>
+              <TabsTrigger value="trends">
+                {t("marketPage.tabs.trends")}
+              </TabsTrigger>
+              <TabsTrigger value="comparison">
+                {t("marketPage.tabs.comparison")}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="current" className="space-y-4">
@@ -510,7 +571,8 @@ export default function MarketPricesPage() {
                           <span>{price.lastUpdated}</span>
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          Previous: ₹{price.previousPrice.toLocaleString()}
+                          {t("marketPage.previous")}: ₹
+                          {price.previousPrice.toLocaleString()}
                         </div>
                       </div>
                     </CardContent>
@@ -522,9 +584,9 @@ export default function MarketPricesPage() {
             <TabsContent value="trends" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Price Trends (Last 20 Days)</CardTitle>
+                  <CardTitle>{t("marketPage.trends.title")}</CardTitle>
                   <CardDescription>
-                    Historical price movements for major crops
+                    {t("marketPage.trends.description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -538,9 +600,9 @@ export default function MarketPricesPage() {
             <TabsContent value="comparison" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Market-wise Price Comparison</CardTitle>
+                  <CardTitle>{t("marketPage.comparison.title")}</CardTitle>
                   <CardDescription>
-                    Compare prices across different markets
+                    {t("marketPage.comparison.description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -48,6 +49,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { createReport } from "../services/auth";
 import {
   FileText,
   Download,
@@ -70,140 +72,176 @@ ChartJS.register(
   Legend
 );
 
-const reports = [
-  {
-    id: 1,
-    title: "Monthly Farmer Registration Report",
-    description:
-      "Comprehensive analysis of new farmer registrations across all districts",
-    type: "Registration",
-    generatedDate: "2024-12-20",
-    generatedBy: "System Admin",
-    status: "Completed",
-    fileSize: "2.4 MB",
-    downloadCount: 45,
-    format: "PDF",
-  },
-  {
-    id: 2,
-    title: "Crop Yield Performance Analysis",
-    description:
-      "Detailed yield analysis comparing current season with historical data",
-    type: "Analytics",
-    generatedDate: "2024-12-19",
-    generatedBy: "Data Analyst",
-    status: "Completed",
-    fileSize: "5.1 MB",
-    downloadCount: 78,
-    format: "Excel",
-  },
-  {
-    id: 3,
-    title: "Pest Outbreak Summary Report",
-    description: "Summary of pest outbreaks and control measures implemented",
-    type: "Pest Control",
-    generatedDate: "2024-12-18",
-    generatedBy: "Field Officer",
-    status: "Completed",
-    fileSize: "1.8 MB",
-    downloadCount: 32,
-    format: "PDF",
-  },
-  {
-    id: 4,
-    title: "Market Price Trends Analysis",
-    description: "Analysis of crop price fluctuations and market trends",
-    type: "Market",
-    generatedDate: "2024-12-17",
-    generatedBy: "Market Analyst",
-    status: "Processing",
-    fileSize: "3.2 MB",
-    downloadCount: 0,
-    format: "PDF",
-  },
-  {
-    id: 5,
-    title: "Scheme Implementation Progress",
-    description:
-      "Progress report on government scheme implementation and beneficiary coverage",
-    type: "Schemes",
-    generatedDate: "2024-12-16",
-    generatedBy: "Program Manager",
-    status: "Completed",
-    fileSize: "4.7 MB",
-    downloadCount: 156,
-    format: "Excel",
-  },
-];
-
-const insights = [
-  {
-    id: 1,
-    title: "Farmer Registration Surge",
-    description: "25% increase in farmer registrations compared to last month",
-    impact: "High",
-    category: "Registration",
-    trend: "up",
-    value: "+25%",
-    recommendation: "Expand outreach programs to maintain momentum",
-  },
-  {
-    id: 2,
-    title: "Crop Yield Improvement",
-    description: "Average yield increased by 12% across major crops",
-    impact: "High",
-    category: "Yield",
-    trend: "up",
-    value: "+12%",
-    recommendation: "Share best practices with underperforming districts",
-  },
-  {
-    id: 3,
-    title: "Pest Control Effectiveness",
-    description: "Pest control measures reduced crop damage by 18%",
-    impact: "Medium",
-    category: "Pest Control",
-    trend: "up",
-    value: "+18%",
-    recommendation: "Continue current pest management strategies",
-  },
-  {
-    id: 4,
-    title: "Market Price Volatility",
-    description: "Higher than normal price fluctuations observed",
-    impact: "Medium",
-    category: "Market",
-    trend: "down",
-    value: "±15%",
-    recommendation: "Implement price stabilization measures",
-  },
-];
-
-const reportMetrics = [
-  { month: "Jul", generated: 12, downloaded: 145 },
-  { month: "Aug", generated: 15, downloaded: 178 },
-  { month: "Sep", generated: 18, downloaded: 203 },
-  { month: "Oct", downloaded: 234, generated: 22 },
-  { month: "Nov", generated: 25, downloaded: 267 },
-  { month: "Dec", generated: 28, downloaded: 298 },
-];
-
 export default function ReportsPage() {
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState("All Types");
-  const [selectedStatus, setSelectedStatus] = useState("All Status");
+  const [selectedType, setSelectedType] = useState(
+    t("reports.filters.allTypes")
+  );
+  const [selectedStatus, setSelectedStatus] = useState(
+    t("reports.filters.allStatus")
+  );
   const [isGenerating, setIsGenerating] = useState(false);
   const [reportTitle, setReportTitle] = useState("");
   const [reportType, setReportType] = useState("");
   const [dateRange, setDateRange] = useState({});
+  const [previewReport, setPreviewReport] = useState(null);
+
+  const reports = [
+    {
+      id: 1,
+      title: t("reports.list.monthlyFarmerRegistration.title"),
+      description: t("reports.list.monthlyFarmerRegistration.description"),
+      type: t("reports.types.registration"),
+      generatedDate: "2024-12-20",
+      generatedBy: t("reports.generatedBy.systemAdmin"),
+      status: t("reports.status.completed"),
+      fileSize: "2.4 MB",
+      downloadCount: 45,
+      format: "PDF",
+    },
+    {
+      id: 2,
+      title: t("reports.list.cropYieldPerformance.title"),
+      description: t("reports.list.cropYieldPerformance.description"),
+      type: t("reports.types.analytics"),
+      generatedDate: "2024-12-19",
+      generatedBy: t("reports.generatedBy.dataAnalyst"),
+      status: t("reports.status.completed"),
+      fileSize: "5.1 MB",
+      downloadCount: 78,
+      format: "Excel",
+    },
+    {
+      id: 3,
+      title: t("reports.list.pestOutbreakSummary.title"),
+      description: t("reports.list.pestOutbreakSummary.description"),
+      type: t("reports.types.pestControl"),
+      generatedDate: "2024-12-18",
+      generatedBy: t("reports.generatedBy.fieldOfficer"),
+      status: t("reports.status.completed"),
+      fileSize: "1.8 MB",
+      downloadCount: 32,
+      format: "PDF",
+    },
+    {
+      id: 4,
+      title: t("reports.list.marketPriceTrends.title"),
+      description: t("reports.list.marketPriceTrends.description"),
+      type: t("reports.types.market"),
+      generatedDate: "2024-12-17",
+      generatedBy: t("reports.generatedBy.marketAnalyst"),
+      status: t("reports.status.processing"),
+      fileSize: "3.2 MB",
+      downloadCount: 0,
+      format: "PDF",
+    },
+    {
+      id: 5,
+      title: t("reports.list.schemeImplementation.title"),
+      description: t("reports.list.schemeImplementation.description"),
+      type: t("reports.types.schemes"),
+      generatedDate: "2024-12-16",
+      generatedBy: t("reports.generatedBy.programManager"),
+      status: t("reports.status.completed"),
+      fileSize: "4.7 MB",
+      downloadCount: 156,
+      format: "Excel",
+    },
+  ];
+
+  const insights = [
+    {
+      id: 1,
+      title: t("reports.insights.farmerRegistrationSurge.title"),
+      description: t("reports.insights.farmerRegistrationSurge.description"),
+      impact: t("reports.impact.high"),
+      category: t("reports.categories.registration"),
+      trend: "up",
+      value: "+25%",
+      recommendation: t(
+        "reports.insights.farmerRegistrationSurge.recommendation"
+      ),
+    },
+    {
+      id: 2,
+      title: t("reports.insights.cropYieldImprovement.title"),
+      description: t("reports.insights.cropYieldImprovement.description"),
+      impact: t("reports.impact.high"),
+      category: t("reports.categories.yield"),
+      trend: "up",
+      value: "+12%",
+      recommendation: t("reports.insights.cropYieldImprovement.recommendation"),
+    },
+    {
+      id: 3,
+      title: t("reports.insights.pestControlEffectiveness.title"),
+      description: t("reports.insights.pestControlEffectiveness.description"),
+      impact: t("reports.impact.medium"),
+      category: t("reports.categories.pestControl"),
+      trend: "up",
+      value: "+18%",
+      recommendation: t(
+        "reports.insights.pestControlEffectiveness.recommendation"
+      ),
+    },
+    {
+      id: 4,
+      title: t("reports.insights.marketPriceVolatility.title"),
+      description: t("reports.insights.marketPriceVolatility.description"),
+      impact: t("reports.impact.medium"),
+      category: t("reports.categories.market"),
+      trend: "down",
+      value: "±15%",
+      recommendation: t(
+        "reports.insights.marketPriceVolatility.recommendation"
+      ),
+    },
+  ];
+
+  const metrics = [
+    {
+      title: t("reports.metrics.totalReports"),
+      value: "156",
+      change: t("reports.metrics.thisMonth", { count: 12 }),
+      icon: FileText,
+    },
+    {
+      title: t("reports.metrics.downloads"),
+      value: "2,847",
+      change: t("reports.metrics.thisWeek", { count: 234 }),
+      icon: Download,
+    },
+    {
+      title: t("reports.metrics.activeUsers"),
+      value: "89",
+      change: t("reports.metrics.newUsers", { count: 15 }),
+      icon: Users,
+    },
+    {
+      title: t("reports.metrics.insightsGenerated"),
+      value: "24",
+      change: t("reports.metrics.newInsights", { count: 6 }),
+      icon: BarChart3,
+    },
+  ];
+
+  const reportMetrics = [
+    { month: t("reports.months.jul"), generated: 12, downloaded: 145 },
+    { month: t("reports.months.aug"), generated: 15, downloaded: 178 },
+    { month: t("reports.months.sep"), generated: 18, downloaded: 203 },
+    { month: t("reports.months.oct"), downloaded: 234, generated: 22 },
+    { month: t("reports.months.nov"), generated: 25, downloaded: 267 },
+    { month: t("reports.months.dec"), generated: 28, downloaded: 298 },
+  ];
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Completed":
+      case t("reports.status.completed"):
         return "bg-green-100 text-green-800 border-green-200";
-      case "Processing":
+      case t("reports.status.processing"):
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "Failed":
+      case t("reports.status.failed"):
         return "bg-red-100 text-red-800 border-red-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
@@ -212,11 +250,11 @@ export default function ReportsPage() {
 
   const getImpactColor = (impact) => {
     switch (impact) {
-      case "High":
+      case t("reports.impact.high"):
         return "bg-red-100 text-red-800 border-red-200";
-      case "Medium":
+      case t("reports.impact.medium"):
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "Low":
+      case t("reports.impact.low"):
         return "bg-green-100 text-green-800 border-green-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
@@ -231,20 +269,57 @@ export default function ReportsPage() {
     );
   };
 
-  const handleGenerateReport = () => {
+  const handleGenerateReport = async () => {
     setIsGenerating(true);
-    // Simulate report generation
-    setTimeout(() => {
-      setIsGenerating(false);
+    try {
+      await createReport({ title: reportTitle, type: reportType, dateRange });
       setReportTitle("");
       setReportType("");
       setDateRange({});
-    }, 3000);
+    } catch (e) {
+      alert("Failed to generate report: " + e.message);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const formatDate = (date) => {
-    if (!date) return "Select date";
+    if (!date) return t("reports.selectDate");
     return date.toLocaleDateString();
+  };
+
+  const filteredReports = reports.filter((r) => {
+    const typeOk =
+      selectedType === t("reports.filters.allTypes") || r.type === selectedType;
+    const statusOk =
+      selectedStatus === t("reports.filters.allStatus") ||
+      r.status === selectedStatus;
+    return typeOk && statusOk;
+  });
+
+  const resetFilters = () => {
+    setSelectedType(t("reports.filters.allTypes"));
+    setSelectedStatus(t("reports.filters.allStatus"));
+  };
+
+  const handlePreview = (report) => {
+    setPreviewReport(report);
+  };
+
+  const handleDownload = (report) => {
+    // Simulate a file download with basic CSV/PDF placeholder
+    const content = `Report: ${report.title}\nType: ${report.type}\nGenerated: ${report.generatedDate}`;
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${report.title.replace(/\s+/g, "_")}.${
+      report.format.toLowerCase() === "excel" ? "csv" : "txt"
+    }`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
   };
 
   // Chart configuration
@@ -252,14 +327,14 @@ export default function ReportsPage() {
     labels: reportMetrics.map((item) => item.month),
     datasets: [
       {
-        label: "Reports Generated",
+        label: t("reports.chart.reportsGenerated"),
         data: reportMetrics.map((item) => item.generated),
-        backgroundColor: "#2E7D32", // Primary color from new theme
+        backgroundColor: "#2E7D32",
       },
       {
-        label: "Downloads",
+        label: t("reports.chart.downloads"),
         data: reportMetrics.map((item) => item.downloaded),
-        backgroundColor: "#66BB6A", // Secondary color from new theme
+        backgroundColor: "#66BB6A",
       },
     ],
   };
@@ -271,47 +346,47 @@ export default function ReportsPage() {
       legend: {
         position: "top",
         labels: {
-          color: "#212121", // Text primary
+          color: "#212121",
           font: {
-            family: "'Inter', sans-serif"
-          }
-        }
+            family: "'Inter', sans-serif",
+          },
+        },
       },
       tooltip: {
-        backgroundColor: "#FFFFFF", // Surface color
-        titleColor: "#212121", // Text primary
-        bodyColor: "#212121", // Text primary
-        borderColor: "#E0E0E0", // Border color
+        backgroundColor: "#FFFFFF",
+        titleColor: "#212121",
+        bodyColor: "#212121",
+        borderColor: "#E0E0E0",
         borderWidth: 1,
         padding: 10,
         boxWidth: 10,
         boxHeight: 10,
-        usePointStyle: true
-      }
+        usePointStyle: true,
+      },
     },
     scales: {
       y: {
         beginAtZero: true,
         grid: {
-          color: "#E0E0E0", // Border color
+          color: "#E0E0E0",
         },
         ticks: {
-          color: "#4E4E4E", // Text secondary
+          color: "#4E4E4E",
         },
       },
       x: {
         grid: {
-          color: "#E0E0E0", // Border color
+          color: "#E0E0E0",
         },
         ticks: {
-          color: "#4E4E4E", // Text secondary
+          color: "#4E4E4E",
         },
       },
     },
     animation: {
       duration: 1000,
-      easing: 'easeOutQuart'
-    }
+      easing: "easeOutQuart",
+    },
   };
 
   return (
@@ -332,10 +407,10 @@ export default function ReportsPage() {
             </Button>
             <div>
               <h1 className="text-xl font-semibold text-foreground">
-                Reports & Insights
+                {t("reports.pageTitle")}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Generate and manage analytical reports
+                {t("reports.pageDescription")}
               </p>
             </div>
           </div>
@@ -344,52 +419,62 @@ export default function ReportsPage() {
               <DialogTrigger asChild>
                 <Button className="bg-primary hover:bg-primary/90">
                   <Plus className="h-4 w-4 mr-2" />
-                  Generate Report
+                  {t("reports.generateReport")}
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-md animate-in fade-in-0 zoom-in-95 duration-200">
                 <DialogHeader>
-                  <DialogTitle>Generate New Report</DialogTitle>
+                  <DialogTitle>{t("reports.generateNewReport")}</DialogTitle>
                   <DialogDescription>
-                    Create a custom report with specific parameters
+                    {t("reports.generateReportDescription")}
                   </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-4 py-4">
                   <div className="space-y-2">
-                    <Label htmlFor="report-title">Report Title</Label>
+                    <Label htmlFor="report-title">
+                      {t("reports.reportTitle")}
+                    </Label>
                     <Input
                       id="report-title"
                       value={reportTitle}
                       onChange={(e) => setReportTitle(e.target.value)}
-                      placeholder="Enter report title"
+                      placeholder={t("reports.enterReportTitle")}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="report-type">Report Type</Label>
+                    <Label htmlFor="report-type">
+                      {t("reports.reportType")}
+                    </Label>
                     <Select value={reportType} onValueChange={setReportType}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select report type" />
+                        <SelectValue
+                          placeholder={t("reports.selectReportType")}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="registration">
-                          Registration Report
+                          {t("reports.types.registrationReport")}
                         </SelectItem>
                         <SelectItem value="analytics">
-                          Analytics Report
+                          {t("reports.types.analyticsReport")}
                         </SelectItem>
                         <SelectItem value="pest">
-                          Pest Control Report
+                          {t("reports.types.pestControlReport")}
                         </SelectItem>
-                        <SelectItem value="market">Market Analysis</SelectItem>
-                        <SelectItem value="schemes">Schemes Report</SelectItem>
+                        <SelectItem value="market">
+                          {t("reports.types.marketAnalysis")}
+                        </SelectItem>
+                        <SelectItem value="schemes">
+                          {t("reports.types.schemesReport")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Date Range</Label>
+                    <Label>{t("reports.dateRange")}</Label>
                     <div className="flex space-x-2">
                       <Popover>
                         <PopoverTrigger asChild>
@@ -400,7 +485,7 @@ export default function ReportsPage() {
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {dateRange.from
                               ? formatDate(dateRange.from)
-                              : "From date"}
+                              : t("reports.fromDate")}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
@@ -423,7 +508,7 @@ export default function ReportsPage() {
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {dateRange.to
                               ? formatDate(dateRange.to)
-                              : "To date"}
+                              : t("reports.toDate")}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
@@ -441,7 +526,7 @@ export default function ReportsPage() {
                   </div>
 
                   <div className="flex justify-end space-x-2 pt-4">
-                    <Button variant="outline">Cancel</Button>
+                    <Button variant="outline">{t("common.cancel")}</Button>
                     <Button
                       onClick={handleGenerateReport}
                       disabled={!reportTitle || !reportType || isGenerating}
@@ -450,10 +535,10 @@ export default function ReportsPage() {
                       {isGenerating ? (
                         <div className="flex items-center space-x-2">
                           <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                          <span>Generating...</span>
+                          <span>{t("reports.generating")}</span>
                         </div>
                       ) : (
-                        "Generate Report"
+                        t("reports.generateReport")
                       )}
                     </Button>
                   </div>
@@ -467,32 +552,7 @@ export default function ReportsPage() {
         <main className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              {
-                title: "Total Reports",
-                value: "156",
-                change: "+12 this month",
-                icon: FileText,
-              },
-              {
-                title: "Downloads",
-                value: "2,847",
-                change: "+234 this week",
-                icon: Download,
-              },
-              {
-                title: "Active Users",
-                value: "89",
-                change: "+15 new users",
-                icon: Users,
-              },
-              {
-                title: "Insights Generated",
-                value: "24",
-                change: "+6 new insights",
-                icon: BarChart3,
-              },
-            ].map((metric, index) => (
+            {metrics.map((metric, index) => (
               <Card
                 key={metric.title}
                 className="animate-in fade-in-0 slide-in-from-bottom-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
@@ -522,9 +582,15 @@ export default function ReportsPage() {
             className="animate-in fade-in-0 slide-in-from-bottom-4 duration-700 delay-300"
           >
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="reports">Generated Reports</TabsTrigger>
-              <TabsTrigger value="insights">Key Insights</TabsTrigger>
-              <TabsTrigger value="analytics">Report Analytics</TabsTrigger>
+              <TabsTrigger value="reports">
+                {t("reports.tabs.generatedReports")}
+              </TabsTrigger>
+              <TabsTrigger value="insights">
+                {t("reports.tabs.keyInsights")}
+              </TabsTrigger>
+              <TabsTrigger value="analytics">
+                {t("reports.tabs.reportAnalytics")}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="reports" className="space-y-6">
@@ -533,7 +599,7 @@ export default function ReportsPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Filter className="h-5 w-5 text-primary" />
-                    <span>Filter Reports</span>
+                    <span>{t("reports.filterReports")}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -543,18 +609,24 @@ export default function ReportsPage() {
                       onValueChange={setSelectedType}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Filter by type" />
+                        <SelectValue placeholder={t("reports.filterByType")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="All Types">All Types</SelectItem>
-                        <SelectItem value="Registration">
-                          Registration
+                        <SelectItem value={t("reports.filters.allTypes")}>
+                          {t("reports.filters.allTypes")}
                         </SelectItem>
-                        <SelectItem value="Analytics">Analytics</SelectItem>
-                        <SelectItem value="Pest Control">
-                          Pest Control
+                        <SelectItem value={t("reports.types.registration")}>
+                          {t("reports.types.registration")}
                         </SelectItem>
-                        <SelectItem value="Market">Market</SelectItem>
+                        <SelectItem value={t("reports.types.analytics")}>
+                          {t("reports.types.analytics")}
+                        </SelectItem>
+                        <SelectItem value={t("reports.types.pestControl")}>
+                          {t("reports.types.pestControl")}
+                        </SelectItem>
+                        <SelectItem value={t("reports.types.market")}>
+                          {t("reports.types.market")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
 
@@ -563,24 +635,36 @@ export default function ReportsPage() {
                       onValueChange={setSelectedStatus}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Filter by status" />
+                        <SelectValue
+                          placeholder={t("reports.filterByStatus")}
+                        />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="All Status">All Status</SelectItem>
-                        <SelectItem value="Completed">Completed</SelectItem>
-                        <SelectItem value="Processing">Processing</SelectItem>
-                        <SelectItem value="Failed">Failed</SelectItem>
+                        <SelectItem value={t("reports.filters.allStatus")}>
+                          {t("reports.filters.allStatus")}
+                        </SelectItem>
+                        <SelectItem value={t("reports.status.completed")}>
+                          {t("reports.status.completed")}
+                        </SelectItem>
+                        <SelectItem value={t("reports.status.processing")}>
+                          {t("reports.status.processing")}
+                        </SelectItem>
+                        <SelectItem value={t("reports.status.failed")}>
+                          {t("reports.status.failed")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
 
-                    <Button variant="outline">Reset Filters</Button>
+                    <Button variant="outline" onClick={resetFilters}>
+                      {t("reports.resetFilters")}
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Reports List */}
               <div className="space-y-4">
-                {reports.map((report, index) => (
+                {filteredReports.map((report, index) => (
                   <Card
                     key={report.id}
                     className="animate-in fade-in-0 slide-in-from-left-2 hover:shadow-md transition-all duration-200"
@@ -608,24 +692,41 @@ export default function ReportsPage() {
                             {report.description}
                           </p>
                           <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-                            <span>Generated: {report.generatedDate}</span>
-                            <span>By: {report.generatedBy}</span>
-                            <span>Size: {report.fileSize}</span>
-                            <span>Downloads: {report.downloadCount}</span>
-                            <span>Format: {report.format}</span>
+                            <span>
+                              {t("reports.generated")}: {report.generatedDate}
+                            </span>
+                            <span>
+                              {t("reports.by")}: {report.generatedBy}
+                            </span>
+                            <span>
+                              {t("reports.size")}: {report.fileSize}
+                            </span>
+                            <span>
+                              {t("reports.downloads")}: {report.downloadCount}
+                            </span>
+                            <span>
+                              {t("reports.format")}: {report.format}
+                            </span>
                           </div>
                         </div>
                         <div className="flex space-x-2 lg:ml-6">
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handlePreview(report)}
+                          >
                             <Eye className="h-4 w-4 mr-2" />
-                            Preview
+                            {t("reports.preview")}
                           </Button>
                           <Button
                             size="sm"
-                            disabled={report.status !== "Completed"}
+                            disabled={
+                              report.status !== t("reports.status.completed")
+                            }
+                            onClick={() => handleDownload(report)}
                           >
                             <Download className="h-4 w-4 mr-2" />
-                            Download
+                            {t("reports.download")}
                           </Button>
                         </div>
                       </div>
@@ -657,7 +758,7 @@ export default function ReportsPage() {
                               variant="outline"
                               className={getImpactColor(insight.impact)}
                             >
-                              {insight.impact} Impact
+                              {insight.impact} {t("reports.impact2")}
                             </Badge>
                             <Badge variant="secondary" className="text-xs">
                               {insight.category}
@@ -672,12 +773,12 @@ export default function ReportsPage() {
                             {insight.value}
                           </span>
                           <Button variant="ghost" size="sm">
-                            View Details
+                            {t("reports.viewDetails")}
                           </Button>
                         </div>
                         <div className="bg-muted p-3 rounded-lg">
                           <p className="text-xs font-medium text-muted-foreground mb-1">
-                            Recommendation
+                            {t("reports.recommendation")}
                           </p>
                           <p className="text-sm">{insight.recommendation}</p>
                         </div>
@@ -691,9 +792,9 @@ export default function ReportsPage() {
             <TabsContent value="analytics" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Report Generation & Download Trends</CardTitle>
+                  <CardTitle>{t("reports.chart.title")}</CardTitle>
                   <CardDescription>
-                    Monthly statistics for report generation and downloads
+                    {t("reports.chart.description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -704,6 +805,44 @@ export default function ReportsPage() {
               </Card>
             </TabsContent>
           </Tabs>
+          {/* Preview Dialog */}
+          <Dialog
+            open={!!previewReport}
+            onOpenChange={(open) => !open && setPreviewReport(null)}
+          >
+            <DialogContent className="max-w-2xl animate-in fade-in-0 zoom-in-95 duration-200">
+              <DialogHeader>
+                <DialogTitle>{previewReport?.title}</DialogTitle>
+                <DialogDescription>
+                  {t("reports.previewing")} {previewReport?.format}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  {previewReport?.description}
+                </p>
+                <div className="text-xs text-muted-foreground flex flex-wrap gap-4">
+                  <span>
+                    {t("reports.generated")}: {previewReport?.generatedDate}
+                  </span>
+                  <span>
+                    {t("reports.by")}: {previewReport?.generatedBy}
+                  </span>
+                  <span>
+                    {t("reports.size")}: {previewReport?.fileSize}
+                  </span>
+                  <span>
+                    {t("reports.format")}: {previewReport?.format}
+                  </span>
+                </div>
+                <div className="bg-muted p-3 rounded">
+                  <pre className="whitespace-pre-wrap text-xs">
+                    {t("reports.previewPlaceholder")}
+                  </pre>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </main>
       </div>
     </div>

@@ -102,31 +102,28 @@ const recentActivities = [
 const notifications = [
   {
     id: 1,
-    title: "Weather Alert: Heavy Rainfall Expected",
-    message:
-      "Monsoon alert issued for coastal districts. Farmers advised to take precautionary measures.",
     type: "warning",
-    time: "5 minutes ago",
     priority: "high",
+    titleKey: "dashboard.notifications.weather.title",
+    messageKey: "dashboard.notifications.weather.message",
+    timeKey: "dashboard.notifications.weather.time",
   },
   {
     id: 2,
-    title: "New Subsidy Scheme Launched",
-    message:
-      "PM-KISAN beneficiary registration now open. Apply before the deadline.",
     type: "info",
-    time: "2 hours ago",
     priority: "medium",
+    titleKey: "dashboard.notifications.scheme.title",
+    messageKey: "dashboard.notifications.scheme.message",
+    timeKey: "dashboard.notifications.scheme.time",
   },
   {
     id: 3,
-    title: "Pest Control Advisory Sent",
-    message:
-      "Brown plant hopper control measures sent to 15,000+ farmers in affected areas.",
     type: "success",
-    time: "1 day ago",
     priority: "low",
-  },
+    titleKey: "dashboard.notifications.pest.title",
+    messageKey: "dashboard.notifications.pest.message",
+    timeKey: "dashboard.notifications.pest.time",
+  }
 ];
 
 // Helper functions for notification display
@@ -299,10 +296,10 @@ export default function DashboardPage() {
                           </div>
                           <div>
                             <h4 className="text-sm font-medium">
-                              {notification.title}
+                                {t(notification.titleKey)}
                             </h4>
                             <p className="text-xs text-muted-foreground mt-1">
-                              {notification.message}
+                                {t(notification.messageKey)}
                             </p>
                             <div className="flex items-center space-x-2 text-xs text-muted-foreground mt-1">
                               <Badge
@@ -311,9 +308,9 @@ export default function DashboardPage() {
                                   notification.priority
                                 )}`}
                               >
-                                {notification.priority}
+                                  {t(`dashboard.notifications.priority.${notification.priority}`)}
                               </Badge>
-                              <span>{notification.time}</span>
+                              <span>{t(notification.timeKey)}</span>
                             </div>
                           </div>
                         </div>

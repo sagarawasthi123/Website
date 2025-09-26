@@ -1,19 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { HeatmapLayer } from "@deck.gl/aggregation-layers";
 
-const SAMPLE_DATA = [
-  { position: [80.2707, 13.0827], weight: 1, city: "chennai" },
-  { position: [76.9558, 11.0168], weight: 2, city: "coimbatore" },
-  { position: [78.1198, 9.9252], weight: 4, city: "madurai" },
-  { position: [78.7047, 10.7905], weight: 3, city: "trichy" },
-  { position: [78.146, 11.6643], weight: 7, city: "salem" },
-  { position: [78.6569, 11.1271], weight: 1, city: "erode" },
-  { position: [79.84, 10.7656], weight: 1, city: "thanjavur" },
-  { position: [79.1378, 10.79], weight: 8, city: "tirunelveli" },
-];
+import { fetchPestReport } from "../services/auth";
+
+const CITY_TO_COORDS = {
+  chennai: [80.2707, 13.0827],
+  coimbatore: [76.9558, 11.0168],
+  erode: [77.7279, 11.341],
+  madurai: [78.1198, 9.9252],
+  salem: [78.146, 11.6643],
+  trichy: [78.7047, 10.7905],
+  thanjavur: [79.1378, 10.79],
+  tirunelveli: [77.349, 8.7139],
+};
 
 const COLOR_RANGE = [
   [255, 0, 0, 180],
@@ -26,6 +28,7 @@ const COLOR_RANGE = [
 export default function CropHealthMap() {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -42,13 +45,29 @@ export default function CropHealthMap() {
   }, []);
 
   useEffect(() => {
-    if (!mapRef.current) return;
+    // load data from backend
+    fetchPestReport()
+      .then((obj) => {
+        const arr = Object.entries(obj || {}).map(([city, count]) => ({
+          position: CITY_TO_COORDS[city.toLowerCase?.() || city] || [
+            78.9629, 20.5937,
+          ],
+          weight: Number(count) || 0,
+          city,
+        }));
+        setData(arr);
+      })
+      .catch(() => setData([]));
+  }, []);
+
+  useEffect(() => {
+    if (!mapRef.current || !data.length) return;
 
     const overlay = new MapboxOverlay({
       layers: [
         new HeatmapLayer({
           id: "heatmap-layer",
-          data: SAMPLE_DATA,
+          data,
           getPosition: (d) => d.position,
           getWeight: (d) => d.weight * 25,
           radiusPixels: 100,
@@ -60,7 +79,12 @@ export default function CropHealthMap() {
     });
 
     mapRef.current.addControl(overlay);
-  }, []);
+    return () => {
+      try {
+        mapRef.current && mapRef.current.removeControl(overlay);
+      } catch {}
+    };
+  }, [data]);
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4 bg-white rounded-lg shadow-lg">

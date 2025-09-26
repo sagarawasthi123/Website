@@ -45,6 +45,7 @@ import {
   Menu,
   Download,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(
   CategoryScale,
@@ -66,7 +67,6 @@ const cropColors = [
   "#66BB6A", // Wheat
   "#4E4E4E", // Pulses
 ];
-
 
 const yieldData = [
   { year: "2020", rice: 28, wheat: 25, sugarcane: 65, vegetables: 12 },
@@ -109,10 +109,79 @@ const monthlyProgress = [
 ];
 
 export default function YieldAnalysisPage() {
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedYear, setSelectedYear] = useState("2024");
   const [selectedCrop, setSelectedCrop] = useState("All Crops");
   const [selectedDistrict, setSelectedDistrict] = useState("All Districts");
+
+  const downloadFile = (
+    content,
+    filename,
+    mimeType = "text/csv;charset=utf-8;"
+  ) => {
+    const blob = new Blob([content], { type: mimeType });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const handleExport = () => {
+    // Build a simple CSV from available datasets to simulate an export report
+    // Respect current filters where feasible
+    const lines = [];
+    lines.push("Yield Trends");
+    lines.push(
+      [
+        "Year",
+        "Rice(T/Ha)",
+        "Wheat(T/Ha)",
+        "Vegetables(T/Ha)",
+        "Sugarcane(T/Ha)",
+      ].join(",")
+    );
+    yieldData.forEach((row) => {
+      lines.push(
+        [row.year, row.rice, row.wheat, row.vegetables, row.sugarcane].join(",")
+      );
+    });
+
+    lines.push("");
+    lines.push("Seasonal Production vs Target");
+    lines.push(["Season", "Actual(000 T)", "Target(000 T)"].join(","));
+    seasonalData.forEach((row) => {
+      lines.push([row.season, row.production, row.target].join(","));
+    });
+
+    lines.push("");
+    lines.push("District Yield");
+    lines.push(["District", "Rice(T/Ha)", "Wheat(T/Ha)", "Area(Ha)"].join(","));
+    districtYield
+      .filter(
+        (d) =>
+          selectedDistrict === "All Districts" ||
+          d.district === selectedDistrict
+      )
+      .forEach((row) => {
+        lines.push([row.district, row.rice, row.wheat, row.area].join(","));
+      });
+
+    lines.push("");
+    lines.push("Monthly Progress");
+    lines.push(["Month", "Sowing(%)", "Growth(%)", "Harvest(%)"].join(","));
+    monthlyProgress.forEach((row) => {
+      lines.push([row.month, row.sowing, row.growth, row.harvest].join(","));
+    });
+
+    const header = `Report Export - ${selectedYear} - ${selectedCrop} - ${selectedDistrict}`;
+    const csv = [header, "", ...lines].join("\n");
+    downloadFile(csv, `yield-report-${selectedYear}.csv`);
+  };
 
   // Chart configurations
   const yieldTrendsConfig = {
@@ -226,9 +295,9 @@ export default function YieldAnalysisPage() {
         labels: {
           color: "#212121", // Text primary
           font: {
-            family: "'Inter', sans-serif"
-          }
-        }
+            family: "'Inter', sans-serif",
+          },
+        },
       },
       tooltip: {
         backgroundColor: "#FFFFFF", // Surface color
@@ -239,8 +308,8 @@ export default function YieldAnalysisPage() {
         padding: 10,
         boxWidth: 10,
         boxHeight: 10,
-        usePointStyle: true
-      }
+        usePointStyle: true,
+      },
     },
     scales: {
       y: {
@@ -263,8 +332,8 @@ export default function YieldAnalysisPage() {
     },
     animation: {
       duration: 1000,
-      easing: 'easeOutQuart'
-    }
+      easing: "easeOutQuart",
+    },
   };
 
   return (
@@ -285,17 +354,17 @@ export default function YieldAnalysisPage() {
             </Button>
             <div>
               <h1 className="text-xl font-semibold text-foreground">
-                Yield & Crop Analysis
+                {t("yieldPage.header.title")}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Comprehensive crop performance analytics
+                {t("yieldPage.header.subtitle")}
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={handleExport}>
               <Download className="h-4 w-4 mr-2" />
-              Export Report
+              {t("yieldPage.header.export")}
             </Button>
           </div>
         </header>
@@ -307,14 +376,14 @@ export default function YieldAnalysisPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <BarChart3 className="h-5 w-5 text-primary" />
-                <span>Analysis Filters</span>
+                <span>{t("yieldPage.filters.title")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <Select value={selectedYear} onValueChange={setSelectedYear}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Year" />
+                    <SelectValue placeholder={t("yieldPage.filters.year")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="2024">2024</SelectItem>
@@ -325,13 +394,21 @@ export default function YieldAnalysisPage() {
 
                 <Select value={selectedCrop} onValueChange={setSelectedCrop}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Crop" />
+                    <SelectValue placeholder={t("yieldPage.filters.crop")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="All Crops">All Crops</SelectItem>
-                    <SelectItem value="Rice">Rice</SelectItem>
-                    <SelectItem value="Wheat">Wheat</SelectItem>
-                    <SelectItem value="Sugarcane">Sugarcane</SelectItem>
+                    <SelectItem value="All Crops">
+                      {t("yieldPage.crops.all")}
+                    </SelectItem>
+                    <SelectItem value="Rice">
+                      {t("yieldPage.crops.rice")}
+                    </SelectItem>
+                    <SelectItem value="Wheat">
+                      {t("yieldPage.crops.wheat")}
+                    </SelectItem>
+                    <SelectItem value="Sugarcane">
+                      {t("yieldPage.crops.sugarcane")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -340,17 +417,29 @@ export default function YieldAnalysisPage() {
                   onValueChange={setSelectedDistrict}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select District" />
+                    <SelectValue
+                      placeholder={t("yieldPage.filters.district")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="All Districts">All Districts</SelectItem>
-                    <SelectItem value="Cuttack">Cuttack</SelectItem>
-                    <SelectItem value="Bhubaneswar">Bhubaneswar</SelectItem>
-                    <SelectItem value="Puri">Puri</SelectItem>
+                    <SelectItem value="All Districts">
+                      {t("yieldPage.districts.all")}
+                    </SelectItem>
+                    <SelectItem value="Cuttack">
+                      {t("yieldPage.districts.cuttack")}
+                    </SelectItem>
+                    <SelectItem value="Bhubaneswar">
+                      {t("yieldPage.districts.bhubaneswar")}
+                    </SelectItem>
+                    <SelectItem value="Puri">
+                      {t("yieldPage.districts.puri")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
-                <Button variant="outline">Reset Filters</Button>
+                <Button variant="outline">
+                  {t("yieldPage.filters.reset")}
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -359,25 +448,25 @@ export default function YieldAnalysisPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
-                title: "Total Production",
+                title: t("yieldPage.metrics.totalProduction"),
                 value: "8.2M Tonnes",
                 change: "+12.5%",
                 icon: Crop,
               },
               {
-                title: "Average Yield",
+                title: t("yieldPage.metrics.averageYield"),
                 value: "3.2 T/Ha",
                 change: "+8.3%",
                 icon: TrendingUp,
               },
               {
-                title: "Cultivated Area",
+                title: t("yieldPage.metrics.cultivatedArea"),
                 value: "2.8M Ha",
                 change: "+3.2%",
                 icon: MapPin,
               },
               {
-                title: "Efficiency Rate",
+                title: t("yieldPage.metrics.efficiencyRate"),
                 value: "108%",
                 change: "+5.1%",
                 icon: BarChart3,
@@ -398,7 +487,7 @@ export default function YieldAnalysisPage() {
                         {metric.value}
                       </p>
                       <p className="text-xs text-green-600">
-                        {metric.change} from last year
+                        {metric.change} {t("yieldPage.metrics.fromLastYear")}
                       </p>
                     </div>
                     <metric.icon className="h-8 w-8 text-primary" />
@@ -408,24 +497,34 @@ export default function YieldAnalysisPage() {
             ))}
           </div>
 
-          {/* Charts Tabs */}
+          {/* Tabs */}
           <Tabs
             defaultValue="trends"
             className="animate-in fade-in-0 slide-in-from-bottom-4 duration-700 delay-300"
           >
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="trends">Yield Trends</TabsTrigger>
-              <TabsTrigger value="seasonal">Seasonal Analysis</TabsTrigger>
-              <TabsTrigger value="comparison">Crop Comparison</TabsTrigger>
-              <TabsTrigger value="districts">District Performance</TabsTrigger>
+              <TabsTrigger value="trends">
+                {t("yieldPage.tabs.trends")}
+              </TabsTrigger>
+              <TabsTrigger value="seasonal">
+                {t("yieldPage.tabs.seasonal")}
+              </TabsTrigger>
+              <TabsTrigger value="comparison">
+                {t("yieldPage.tabs.comparison")}
+              </TabsTrigger>
+              <TabsTrigger value="districts">
+                {t("yieldPage.tabs.districts")}
+              </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="trends" className="space-y-6">
+            <TabsContent value="trends">
               <Card>
                 <CardHeader>
-                  <CardTitle>5-Year Yield Trends</CardTitle>
+                  <CardTitle>
+                    {t("yieldPage.charts.yieldTrends.title")}
+                  </CardTitle>
                   <CardDescription>
-                    Historical yield performance by crop type
+                    {t("yieldPage.charts.yieldTrends.description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -436,12 +535,12 @@ export default function YieldAnalysisPage() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="seasonal" className="space-y-6">
+            <TabsContent value="seasonal">
               <Card>
                 <CardHeader>
-                  <CardTitle>Seasonal Production Analysis</CardTitle>
+                  <CardTitle>{t("yieldPage.charts.seasonal.title")}</CardTitle>
                   <CardDescription>
-                    Production vs targets across seasons
+                    {t("yieldPage.charts.seasonal.description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -452,11 +551,13 @@ export default function YieldAnalysisPage() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="comparison" className="space-y-6">
+            <TabsContent value="comparison">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Crop Area Distribution</CardTitle>
+                    <CardTitle>
+                      {t("yieldPage.charts.comparison.area")}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div style={{ height: "300px" }}>
@@ -470,33 +571,38 @@ export default function YieldAnalysisPage() {
                     </div>
                   </CardContent>
                 </Card>
-
                 <Card>
                   <CardHeader>
-                    <CardTitle>Yield Efficiency by Crop</CardTitle>
+                    <CardTitle>
+                      {t("yieldPage.charts.comparison.yield")}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {cropComparison.map((crop, index) => (
                         <div
                           key={crop.crop}
-                          className="animate-in fade-in-0 slide-in-from-right-2"
-                          style={{ animationDelay: `${index * 100}ms` }}
+                          className="flex flex-col space-y-1"
                         >
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-medium">
-                              {crop.crop}
+                          <div className="flex justify-between items-center">
+                            <span>
+                              {t(`yieldPage.crops.${crop.crop.toLowerCase()}`)}
                             </span>
-                            <Badge variant="secondary" style={{backgroundColor:cropColors[index]}}>{crop.yield} T/Ha</Badge>
+                            <Badge
+                              variant="secondary"
+                              style={{ backgroundColor: cropColors[index] }}
+                            >
+                              {crop.yield} T/Ha
+                            </Badge>
                           </div>
                           <div className="w-full bg-muted rounded-full h-2">
                             <div
-                                className="bg-primary h-2 rounded-full transition-all duration-1000 ease-out"
-                                style={{
-                                  width: `${(crop.yield / 75) * 100}%`,
-                                  backgroundColor: cropColors[index]
-                                }}
-                              />
+                              className="h-2 rounded-full transition-all duration-1000 ease-out"
+                              style={{
+                                width: `${(crop.yield / 75) * 100}%`,
+                                backgroundColor: cropColors[index],
+                              }}
+                            />
                           </div>
                         </div>
                       ))}
@@ -506,12 +612,12 @@ export default function YieldAnalysisPage() {
               </div>
             </TabsContent>
 
-            <TabsContent value="districts" className="space-y-6">
+            <TabsContent value="districts">
               <Card>
                 <CardHeader>
-                  <CardTitle>District-wise Performance</CardTitle>
+                  <CardTitle>{t("yieldPage.charts.district.title")}</CardTitle>
                   <CardDescription>
-                    Yield comparison across major districts
+                    {t("yieldPage.charts.district.description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -524,28 +630,19 @@ export default function YieldAnalysisPage() {
           </Tabs>
 
           {/* Monthly Progress */}
-          <Card className="animate-in fade-in-0 slide-in-from-bottom-4 duration-700 delay-500">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Calendar className="h-5 w-5 text-primary" />
-                <span>Monthly Crop Progress</span>
+                <span>{t("yieldPage.charts.monthly.title")}</span>
               </CardTitle>
               <CardDescription>
-                Sowing, growth, and harvest progress throughout the year
+                {t("yieldPage.charts.monthly.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div style={{ height: "300px" }}>
-                <Line
-                  data={monthlyConfig}
-                  options={{
-                    ...chartOptions,
-                    plugins: {
-                      ...chartOptions.plugins,
-                      filler: { propagate: false },
-                    },
-                  }}
-                />
+                <Line data={monthlyConfig} options={chartOptions} />
               </div>
             </CardContent>
           </Card>
